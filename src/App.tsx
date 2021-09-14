@@ -1,8 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./index.css";
+import NewComponentTemplate from "./components/NewComponentTemplate";
 
-const App = () => <div>Hi there, I'm React from Webpack 5.</div>;
+const App = () => (
+  <div>
+    <NewComponentTemplate text={"hello world"} />
+  </div>
+);
 
 ReactDOM.render(<App />, document.getElementById("app"));
