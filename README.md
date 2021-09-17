@@ -35,7 +35,7 @@
 
 # ▶ Getting Started
 
-1. clone repo
+1. clone repo or run npx create-rs-app
 2. cd into repo
 3. run yarn
 4. run yarn test
@@ -46,12 +46,12 @@
 1. run yarn generateComponent
 2. provide CLI tool the name of your component
 3. check for the following files under ./src/components/yourComponentNameHere
-    - index.ts
-    - yourComponentNameHere.tsx
-    - yourComponentNameHere.styles.ts
-    - yourComponentNameHere.test.ts
-    - yourComponentNameHere.stories.tsx
-    - README.md
+   - index.ts
+   - yourComponentNameHere.tsx
+   - yourComponentNameHere.styles.ts
+   - yourComponentNameHere.test.ts
+   - yourComponentNameHere.stories.tsx
+   - README.md
 
 # ❓ Help
 
