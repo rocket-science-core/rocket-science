@@ -1,6 +1,9 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Readme from './README.md';
+import * as marked from 'marked';
+const Readme = require("./README.md").default;
+
+
 
 import NewComponentTemplate from './NewComponentTemplate';
 
@@ -20,7 +23,7 @@ Primary.args = {
 };
 Primary.parameters = {
     readme:{
-        sidebar: Readme
+        sidebar: marked(Readme)
     }
 };
 
