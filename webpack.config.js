@@ -8,7 +8,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".md"],
+    extensions: [".jsx", ".js", ".json", ".md"],
   },
 
   devServer: {

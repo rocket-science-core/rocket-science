@@ -1,5 +1,4 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
 import marked from 'marked';
 const Readme = require("./README.md").default;
 
@@ -13,9 +12,9 @@ export default {
   argTypes: {
     text: { control: 'text' },
   },
-} as ComponentMeta<typeof NewComponentTemplate>;
+};
 
-const Template: ComponentStory<typeof NewComponentTemplate> = (args) => <NewComponentTemplate {...args} />;
+const Template = (args) => <NewComponentTemplate {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

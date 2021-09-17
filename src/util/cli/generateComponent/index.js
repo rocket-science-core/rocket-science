@@ -4,7 +4,7 @@ const fs = require("fs");
 const makeIndexFile = (name) => {
   const indexFile = `export { default } from './${name}';\nexport * from './${name}';`;
   fs.writeFile(
-    `./src/components/${name}/index.ts`,
+    `./src/components/${name}/index.js`,
     indexFile,
     { flag: "w" },
     function (err) {
@@ -40,7 +40,7 @@ export default ${name};
   `;
 
   fs.writeFile(
-    `./src/components/${name}/${name}.tsx`,
+    `./src/components/${name}/${name}.jsx`,
     componentFile,
     { flag: "w" },
     function (err) {
@@ -66,7 +66,7 @@ const ${name}Wrapper = styled.div\`` +
 export default ${name}Wrapper;`;
 
   fs.writeFile(
-    `./src/components/${name}/${name}.styles.ts`,
+    `./src/components/${name}/${name}.styles.js`,
     stylesFile,
     { flag: "w" },
     function (err) {
@@ -116,7 +116,7 @@ Secondary.parameters = {
 };`;
 
   fs.writeFile(
-    `./src/components/${name}/${name}.stories.tsx`,
+    `./src/components/${name}/${name}.stories.jsx`,
     storyFile,
     { flag: "w" },
     function (err) {
@@ -143,7 +143,7 @@ it("${name} renders with no prop value provided", () => {
 });`;
 
 fs.writeFile(
-    `./src/components/${name}/${name}.test.tsx`,
+    `./src/components/${name}/${name}.test.jsx`,
     testsFile,
     { flag: "w" },
     function (err) {

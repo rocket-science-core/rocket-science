@@ -1,14 +1,7 @@
 import React from "react";
 import NewComponentTemplateWrapper from "./NewComponentTemplate.styles";
 
-interface NewComponentTemplateProps {
-  /**
-   * Button label text
-   */
-  text?: string;
-}
-
-const NewComponentTemplate = ({ text }: NewComponentTemplateProps) => {
+const NewComponentTemplate = ({ text }) => {
   return (
     <NewComponentTemplateWrapper>
       <button className="styled-button">
