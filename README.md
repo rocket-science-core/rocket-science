@@ -41,6 +41,12 @@
 4. run yarn test
 5. run yarn storybook
 
+**Optional commands to push to your own git repository**
+
+6. git remote set-url origin https://github.com/user/repo.git (your remote repository)
+7. git remote -v (verify new remote)
+8. git push -u origin main
+
 ## 🧩 Generate New Component
 
 1. run yarn generateComponent
