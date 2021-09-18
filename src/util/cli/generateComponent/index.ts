@@ -76,40 +76,43 @@ export default ${name}Wrapper;`;
 };
 
 const makeStoryFile = (name) => {
-  const storyFile = `import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Readme from './README.md';
+  const storyFile = `import React from "react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import * as marked from "marked";
+const Readme = require("./README.md").default;
 
-import ${name} from './${name}';
+import NewComponentTemplate from "./NewComponentTemplate";
 
 export default {
-  title: 'Unsorted Components/${name}',
-  component: ${name},
+  title: "Examples/NewComponentTemplate",
+  component: NewComponentTemplate,
   argTypes: {
-    text: { control: 'text' },
+    text: { control: "text" },
   },
-} as ComponentMeta<typeof ${name}>;
+} as ComponentMeta<typeof NewComponentTemplate>;
 
-const Template: ComponentStory<typeof ${name}> = (args) => <${name} {...args} />;
+const Template: ComponentStory<typeof NewComponentTemplate> = (args) => (
+  <NewComponentTemplate {...args} />
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
-  text: 'Hello World',
+  text: "Hello World",
 };
 Primary.parameters = {
-  readme:{
-    sidebar: Readme
-  }
+  readme: {
+    sidebar: marked(Readme),
+  },
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  text: '',
+  text: "",
 };
 Secondary.parameters = {
-  readme:{
-    sidebar: Readme
-  }
+  readme: {
+    sidebar: Readme,
+  },
 };`;
 
   fs.writeFile(
