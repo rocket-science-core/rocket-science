@@ -8,9 +8,9 @@
     "watch:dev": "webpack --mode development --watch",
     "test": "jest --json --outputFile=.jest-test-results.json || true",
     "test:watch": "jest --json --outputFile=.jest-test-results.json --watch || true",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "webpack-dev-server --open --mode development --watch",
     "start:live": "webpack-dev-server --open --mode development --liveReload",
-    "story": "rm -rf ./dist && concurrently \"yarn watch:dev\" \"yarn storybook\"",
+    "story": "rm -rf ./dist && concurrently \"yarn watch\" \"yarn storybook\" \"yarn start\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "generate-component": "node ./src/util/cli/generateComponent/index.ts"

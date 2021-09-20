@@ -43,7 +43,9 @@ module.exports = {
       name: "RocketScience",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./NewComponentTemplate": "./src/components/NewComponentTemplate"
+      },
       shared: {
         ...deps,
         react: {
