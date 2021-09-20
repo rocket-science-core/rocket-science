@@ -14,6 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
+    "setup": "yarn && yarn test",
     "generate-component": "node ./src/util/cli/generateComponent/index.ts && yarn test "
   },
   "license": "MIT",
