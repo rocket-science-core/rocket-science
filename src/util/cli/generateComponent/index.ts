@@ -78,21 +78,20 @@ export default ${name}Wrapper;`;
 const makeStoryFile = (name) => {
   const storyFile = `import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import * as marked from "marked";
 const Readme = require("./README.md").default;
 
-import NewComponentTemplate from "./NewComponentTemplate";
+import ${name} from "./${name}";
 
 export default {
-  title: "Examples/NewComponentTemplate",
-  component: NewComponentTemplate,
+  title: "Examples/${name}",
+  component: ${name},
   argTypes: {
     text: { control: "text" },
   },
-} as ComponentMeta<typeof NewComponentTemplate>;
+} as ComponentMeta<typeof ${name}>;
 
-const Template: ComponentStory<typeof NewComponentTemplate> = (args) => (
-  <NewComponentTemplate {...args} />
+const Template: ComponentStory<typeof ${name}> = (args) => (
+  <${name} {...args} />
 );
 
 export const Primary = Template.bind({});
@@ -101,7 +100,7 @@ Primary.args = {
 };
 Primary.parameters = {
   readme: {
-    sidebar: marked(Readme),
+    sidebar: Readme,
   },
 };
 
@@ -160,11 +159,11 @@ This is an example component intended to outline the expected code quality for a
 # 💻 Usage
 
 \`\`\`jsx
-// Replace the file path with the correct filepath to NewComponentTemplate
-import NewComponentTemplate from './filePathTo/NewComponentTemplate';
+// Replace the file path with the correct filepath to ${name}
+import ${name} from './filePathTo/${name}';
 
 // Replace the string provided to text with your own
-<NewComponentTemplate text='text content here' />
+<${name} text='text content here' />
 \`\`\`
 
 # 📩 Button Props

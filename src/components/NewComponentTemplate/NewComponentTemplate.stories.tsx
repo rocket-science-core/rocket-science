@@ -1,9 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import * as marked from 'marked';
 const Readme = require("./README.md").default;
-
-
 
 import NewComponentTemplate from './NewComponentTemplate';
 
