@@ -13,6 +13,10 @@ export default {
   },
 } as ComponentMeta<typeof NewComponentTemplate>;
 
+// ==============================
+// Traditional Node Render on Client Side
+// ==============================
+
 const Template: ComponentStory<typeof NewComponentTemplate> = (args) => (
   <NewComponentTemplate {...args} />
 );
@@ -37,27 +41,33 @@ Secondary.parameters = {
   },
 };
 
+// ==============================
+// Module Federation MFE Render on Client Side
+// ==============================
+
 const ModFedTemplate: ComponentStory<typeof NewComponentTemplate> = (args) => (
   <DynamicRemoteContainer {...args} />
 );
+
 export const ModFedPrimary = ModFedTemplate.bind({});
 ModFedPrimary.args = {
   text: "Hello World",
-  url: "http://localhost:8080/remoteEntry.js",
+  url: "http://localhost:3001/remoteEntry.js",
   scope: "RocketScience",
-  module: "./NewComponentTemplate"
+  module: "./NewComponentTemplate",
 };
 ModFedPrimary.parameters = {
   readme: {
     sidebar: Readme,
   },
 };
+
 export const ModFedSecondary = ModFedTemplate.bind({});
 ModFedSecondary.args = {
   text: "",
-  url: "http://localhost:8080/remoteEntry.js",
+  url: "http://localhost:3001/remoteEntry.js",
   scope: "RocketScience",
-  module: "./NewComponentTemplate"
+  module: "./NewComponentTemplate",
 };
 ModFedSecondary.parameters = {
   readme: {

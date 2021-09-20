@@ -76,8 +76,9 @@ export default ${name}Wrapper;`;
 };
 
 const makeStoryFile = (name) => {
-  const storyFile = `import React from "react";
+const storyFile = `import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import DynamicRemoteContainer from "../../util/hooks/DynamicRemoteContainer";
 const Readme = require("./README.md").default;
 
 import ${name} from "./${name}";
@@ -89,6 +90,10 @@ export default {
     text: { control: "text" },
   },
 } as ComponentMeta<typeof ${name}>;
+
+// ==============================
+// Traditional Node Render on Client Side
+// ==============================
 
 const Template: ComponentStory<typeof ${name}> = (args) => (
   <${name} {...args} />
@@ -109,6 +114,40 @@ Secondary.args = {
   text: "",
 };
 Secondary.parameters = {
+  readme: {
+    sidebar: Readme,
+  },
+};
+
+// ==============================
+// Module Federation MFE Render on Client Side
+// ==============================
+
+const ModFedTemplate: ComponentStory<typeof ${name}> = (args) => (
+  <DynamicRemoteContainer {...args} />
+);
+
+export const ModFedPrimary = ModFedTemplate.bind({});
+ModFedPrimary.args = {
+  text: "Hello World",
+  url: "http://localhost:3001/remoteEntry.js",
+  scope: "RocketScience",
+  module: "./${name}",
+};
+ModFedPrimary.parameters = {
+  readme: {
+    sidebar: Readme,
+  },
+};
+
+export const ModFedSecondary = ModFedTemplate.bind({});
+ModFedSecondary.args = {
+  text: "",
+  url: "http://localhost:3001/remoteEntry.js",
+  scope: "RocketScience",
+  module: "./${name}",
+};
+ModFedSecondary.parameters = {
   readme: {
     sidebar: Readme,
   },
