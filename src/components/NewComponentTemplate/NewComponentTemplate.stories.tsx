@@ -43,6 +43,21 @@ Secondary.parameters = {
 
 // ==============================
 // Module Federation MFE Render on Client Side
+//
+// Notes:
+// - This is a special case where we are using the DynamicRemoteContainer
+// - This is a special case where we are not following the steps below
+//   because this default component is already configured in the 
+//   ModuleFederationComponent
+// 
+// Directions:
+// 1. Make Sure you add the component to the "exposes" 
+//    in webpack.config.js ModuleFederationPlugin
+// 
+// 2. Uncomment the code below
+//
+// 3. Run $ yarn story
+//
 // ==============================
 
 const ModFedTemplate: ComponentStory<typeof NewComponentTemplate> = (args) => (

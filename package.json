@@ -10,11 +10,11 @@
     "test:watch": "jest --json --outputFile=.jest-test-results.json --watch || true",
     "start": "webpack-dev-server --open --mode development --watch",
     "start:live": "webpack-dev-server --open --mode development --liveReload",
-    "story": "rm -rf ./dist && concurrently \"yarn watch:dev\" \"yarn storybook\" \"yarn federate\"",
+    "story": "rm -rf ./dist && concurrently -k \"yarn watch:dev\" \"yarn storybook\" \"yarn federate\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
-    "generate-component": "node ./src/util/cli/generateComponent/index.ts"
+    "generate-component": "node ./src/util/cli/generateComponent/index.ts && yarn test "
   },
   "license": "MIT",
   "author": {

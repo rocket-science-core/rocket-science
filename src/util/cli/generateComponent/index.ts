@@ -1,5 +1,6 @@
 var inquirer = require("inquirer");
 const fs = require("fs");
+const webpackConfig = require("../../../../webpack.config.js");
 
 const makeIndexFile = (name) => {
   const indexFile = `export { default } from './${name}';\nexport * from './${name}';`;
@@ -121,37 +122,45 @@ Secondary.parameters = {
 
 // ==============================
 // Module Federation MFE Render on Client Side
+//
+// 1. Make Sure you add the component to the "exposes" 
+//    in webpack.config.js ModuleFederationPlugin
+// 
+// 2. Uncomment the code below
+//
+// 3. Run $ yarn story
+//
 // ==============================
 
-const ModFedTemplate: ComponentStory<typeof ${name}> = (args) => (
-  <DynamicRemoteContainer {...args} />
-);
+// const ModFedTemplate: ComponentStory<typeof ${name}> = (args) => (
+//   <DynamicRemoteContainer {...args} />
+// );
 
-export const ModFedPrimary = ModFedTemplate.bind({});
-ModFedPrimary.args = {
-  text: "Hello World",
-  url: "http://localhost:3001/remoteEntry.js",
-  scope: "RocketScience",
-  module: "./${name}",
-};
-ModFedPrimary.parameters = {
-  readme: {
-    sidebar: Readme,
-  },
-};
+// export const ModFedPrimary = ModFedTemplate.bind({});
+// ModFedPrimary.args = {
+//   text: "Hello World",
+//   url: "http://localhost:3001/remoteEntry.js",
+//   scope: "RocketScience",
+//   module: "./${name}",
+// };
+// ModFedPrimary.parameters = {
+//   readme: {
+//     sidebar: Readme,
+//   },
+// };
 
-export const ModFedSecondary = ModFedTemplate.bind({});
-ModFedSecondary.args = {
-  text: "",
-  url: "http://localhost:3001/remoteEntry.js",
-  scope: "RocketScience",
-  module: "./${name}",
-};
-ModFedSecondary.parameters = {
-  readme: {
-    sidebar: Readme,
-  },
-};`;
+// export const ModFedSecondary = ModFedTemplate.bind({});
+// ModFedSecondary.args = {
+//   text: "",
+//   url: "http://localhost:3001/remoteEntry.js",
+//   scope: "RocketScience",
+//   module: "./${name}",
+// };
+// ModFedSecondary.parameters = {
+//   readme: {
+//     sidebar: Readme,
+//   },
+// };`;
 
   fs.writeFile(
     `./src/components/${name}/${name}.stories.tsx`,
@@ -235,7 +244,7 @@ inquirer
   .then(({ name }) => {
     // Use user feedback for... whatever!!
     // console.log(answers);
-
+    
     const dir = `./src/components/${name}`;
 
     if (!fs.existsSync(dir)) {
