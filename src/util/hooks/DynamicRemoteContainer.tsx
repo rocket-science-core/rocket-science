@@ -1,5 +1,5 @@
-import React from 'react';
-const useDynamicScript = url => {
+import React from "react";
+const useDynamicScript = (url) => {
   const [ready, setReady] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
@@ -8,9 +8,9 @@ const useDynamicScript = url => {
       return;
     }
 
-    const element = document.createElement('script');
+    const element = document.createElement("script");
     element.src = url;
-    element.type = 'text/javascript';
+    element.type = "text/javascript";
     element.async = true;
 
     setReady(false);
@@ -37,15 +37,27 @@ const useDynamicScript = url => {
 
   return {
     ready,
-    failed
+    failed,
   };
 };
 
-const DynamicRemoteContainer = ({ url, scope, module, ...props }) => {
+export interface DynamicRemoteContainerProps {
+  url?: string;
+  scope?: string;
+  module?: string;
+  componentProps?: { [key: string]: any } | any;
+}
+
+const DynamicRemoteContainer = ({
+  url,
+  scope,
+  module: targetModule,
+  componentProps,
+}: DynamicRemoteContainerProps) => {
   const { ready, failed } = useDynamicScript(url);
 
   if (!ready) {
-    return  <h2>Loading dynamic script: {url}</h2>;
+    return <h2>Loading dynamic script: {url}</h2>;
   }
 
   if (failed) {
@@ -54,22 +66,22 @@ const DynamicRemoteContainer = ({ url, scope, module, ...props }) => {
 
   const Component = React.lazy(
     () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const moduleResolve = resolve;
-        const react = require('react');
+        const react = require("react");
         const legacyShareScope = {
           react: {
             [react.version]: {
-              get: () => new Promise(resolve => resolve(() => react)),
+              get: () => new Promise((resolve) => resolve(() => react)),
               loaded: true,
-              from: 'webpack4'
-            }
-          }
+              from: "webpack4",
+            },
+          },
         };
-        new Promise(resolve => {
+        new Promise((resolve) => {
           resolve(window[scope].init(legacyShareScope));
         }).then(() => {
-          window[scope].get(module).then(factory => {
+          window[scope].get(targetModule).then((factory) => {
             moduleResolve(factory());
           });
         });
@@ -77,8 +89,8 @@ const DynamicRemoteContainer = ({ url, scope, module, ...props }) => {
   );
 
   return (
-    <React.Suspense fallback='Loading System'>
-      <Component {...props} />
+    <React.Suspense fallback="Loading System">
+      <Component {...componentProps} />
     </React.Suspense>
   );
 };
