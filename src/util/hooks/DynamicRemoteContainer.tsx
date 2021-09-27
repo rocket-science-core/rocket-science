@@ -2,9 +2,9 @@ import React from "react";
 
 // --------- Types --------- //
 export type LegacyShareScope = {
-  [key: string]: { // name of module intended for sharing
-    [version: string]: { // version of module intended for sharing
-      get: () => Promise<any>; // getting function to retrieve module
+  [key: string]: { // Name of module intended for sharing
+    [version: string]: { // Version of module intended for sharing
+      get: () => Promise<any>; // Getter function to retrieve module
       loaded: boolean;
       from: string;
     };
@@ -112,7 +112,7 @@ const DynamicRemoteContainer = ({
 
   const Component = React.lazy(
     () =>
-      new Promise((resolve) => { // shared modules from webpack 4 like react or styled-components
+      new Promise((resolve) => { // Shared modules from webpack 4 like react or styled-components
         const moduleResolve = resolve;
         const react = require("react");
         const legacyShareScope: LegacyShareScope = {
@@ -124,7 +124,7 @@ const DynamicRemoteContainer = ({
             },
           },
         };
-        new Promise((resolve) => { // initialize with legacyShareScope then get targetModule
+        new Promise((resolve) => { // Initialize with legacyShareScope then get targetModule
           resolve(window[scope]?.init(legacyShareScope));
         }).then(() => {
           window[scope]?.get(targetModule).then((factory: () => any) => {
