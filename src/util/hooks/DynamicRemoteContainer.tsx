@@ -23,7 +23,7 @@ declare global {
   interface Window { // Augment existing Window declaration
     RocketScience?: ImportObject; 
   }
-  interface ImportScope { // Global key, value pairs for names of ImportObjects 
+  interface ImportScope { // Global key names of ImportObjects 
     RocketScience: 'RocketScience';
   }
 };
@@ -87,7 +87,7 @@ const useDynamicScript = (url: string) => {
 
 
 /**
- * Container component that fetches and loads a script
+ * Container component that fetches and loads a module using a dynamic script
  * @param url source url to remoteEntry script
  * @param scope stored variable in the remoteEntry script (from name field in ModuleFederationPlugin)
  * @param module name of target module to load (from exposes field in ModuleFederationPlugin)
