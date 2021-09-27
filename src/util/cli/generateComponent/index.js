@@ -1,5 +1,6 @@
 var inquirer = require("inquirer");
 const fs = require("fs");
+const webpackConfig = require("../../../../webpack.config.js");
 
 const makeIndexFile = (name) => {
   const indexFile = `export { default } from './${name}';\nexport * from './${name}';`;
@@ -75,48 +76,135 @@ export default ${name}Wrapper;`;
   );
 };
 
-const makeStoryFile = (name) => {
+const makeDefaultStoryFile = (name) => {
   const storyFile = `import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import * as marked from "marked";
-const Readme = require("./README.md").default;
-
-import NewComponentTemplate from "./NewComponentTemplate";
-
-export default {
-  title: "Examples/NewComponentTemplate",
-  component: NewComponentTemplate,
-  argTypes: {
-    text: { control: "text" },
-  },
-} as ComponentMeta<typeof NewComponentTemplate>;
-
-const Template: ComponentStory<typeof NewComponentTemplate> = (args) => (
-  <NewComponentTemplate {...args} />
-);
-
-export const Primary = Template.bind({});
-Primary.args = {
-  text: "Hello World",
-};
-Primary.parameters = {
-  readme: {
-    sidebar: marked(Readme),
-  },
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  text: "",
-};
-Secondary.parameters = {
-  readme: {
-    sidebar: Readme,
-  },
-};`;
+  import { ComponentStory, ComponentMeta } from "@storybook/react";
+  const Readme = require("../README.md").default;
+  
+  import ${name} from "../${name}";
+  
+  export default {
+    title: "Examples/${name}/Default",
+    component: ${name},
+    argTypes: {
+      text: { control: "text" },
+    },
+  } as ComponentMeta<typeof ${name}>;
+  
+  // ==============================
+  // Traditional Node Render on Client Side
+  // ==============================
+  
+  const Template: ComponentStory<typeof ${name}> = (args) => (
+    <${name} {...args} />
+  );
+  
+  export const Primary = Template.bind({});
+  Primary.args = {
+    text: "Hello World",
+  };
+  Primary.parameters = {
+    readme: {
+      sidebar: Readme,
+    },
+  };
+  
+  export const Secondary = Template.bind({});
+  Secondary.args = {
+    text: "",
+  };
+  Secondary.parameters = {
+    readme: {
+      sidebar: Readme,
+    },
+  };`;
 
   fs.writeFile(
-    `./src/components/${name}/${name}.stories.jsx`,
+    `./src/components/${name}/stories/${name}.stories.tsx`,
+    storyFile,
+    { flag: "w" },
+    function (err) {
+      if (err) return console.error(err);
+    }
+  );
+};
+
+const makeFederatedStoryFile = (name) => {
+  const storyFile = `import React from "react";
+  import { ComponentStory, ComponentMeta } from "@storybook/react";
+  import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
+  const Readme = require("../README.md").default;
+  
+  export default {
+    title: "Examples/${name}/Federated",
+    component: DynamicRemoteContainer,
+  } as ComponentMeta<typeof DynamicRemoteContainer>;
+  
+  // ==============================
+  // Module Federation MFE Render on Client Side
+  //
+  // Notes:
+  // - This is a special case where we are using the DynamicRemoteContainer
+  // - This is a special case where we are not following the steps below
+  //   because this default component is already configured in the
+  //   ModuleFederationComponent
+  //
+  // Directions:
+  // 1. Make Sure you add the component to the "exposes"
+  //    in webpack.config.js ModuleFederationPlugin
+  //
+  // 2. Uncomment the code below
+  //
+  // 3. Run $ yarn story
+  //
+  // ==============================
+  
+  // const ModFedTemplate: ComponentStory<typeof DynamicRemoteContainer> = ({
+  //   url,
+  //   scope,
+  //   module: targetModule,
+  //   componentProps,
+  // }) => (
+  //   <DynamicRemoteContainer
+  //     url={url}
+  //     scope={scope}
+  //     module={targetModule}
+  //     componentProps={componentProps}
+  //   />
+  // );
+  
+  // export const ModFedPrimary = ModFedTemplate.bind({});
+  // ModFedPrimary.args = {
+  //   componentProps: {
+  //     text: "Hello World",
+  //   },
+  //   url: "http://localhost:3001/remoteEntry.js",
+  //   scope: "RocketScience",
+  //   module: "./${name}",
+  // };
+  // ModFedPrimary.parameters = {
+  //   readme: {
+  //     sidebar: Readme,
+  //   },
+  // };
+  
+  // export const ModFedSecondary = ModFedTemplate.bind({});
+  // ModFedSecondary.args = {
+  //   componentProps: {
+  //     text: "",
+  //   },
+  //   url: "http://localhost:3001/remoteEntry.js",
+  //   scope: "RocketScience",
+  //   module: "./${name}",
+  // };
+  // ModFedSecondary.parameters = {
+  //   readme: {
+  //     sidebar: Readme,
+  //   },
+  // };`;
+
+  fs.writeFile(
+    `./src/components/${name}/stories/${name}Fed.stories.tsx`,
     storyFile,
     { flag: "w" },
     function (err) {
@@ -160,11 +248,11 @@ This is an example component intended to outline the expected code quality for a
 # 💻 Usage
 
 \`\`\`jsx
-// Replace the file path with the correct filepath to NewComponentTemplate
-import NewComponentTemplate from './filePathTo/NewComponentTemplate';
+// Replace the file path with the correct filepath to ${name}
+import ${name} from './filePathTo/${name}';
 
 // Replace the string provided to text with your own
-<NewComponentTemplate text='text content here' />
+<${name} text='text content here' />
 \`\`\`
 
 # 📩 Button Props
@@ -193,21 +281,35 @@ inquirer
       message: "What is the name of the component?",
       default: "MyComponent",
     },
+    {
+      type: "list",
+      name: "componentType",
+      choices: ["Federated Organism", "Feature Level Component"],
+      message: "Is this a federated organism or a feature level component?"
+    }
   ])
-  .then(({ name }) => {
+  .then((answers) => {
+    const { name, componentType } = answers;
     // Use user feedback for... whatever!!
     // console.log(answers);
-
+    
     const dir = `./src/components/${name}`;
+    const storiesDir = dir + `/stories`;
 
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
       makeIndexFile(name);
       makeComponentFile(name);
       makeStylesFile(name);
-      makeStoryFile(name);
       makeTestsFile(name);
       makeReadmeFile(name);
+    }
+    if (!fs.existsSync(storiesDir)) {
+      fs.mkdirSync(storiesDir, { recursive: false });
+      makeDefaultStoryFile(name);
+      if (componentType === "Federated Organism"){
+        makeFederatedStoryFile(name);
+      }
     }
   })
   .catch((error) => {
