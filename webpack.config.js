@@ -4,7 +4,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-    publicPath: "http://localhost:8080/",
+    publicPath: "http://localhost:3001/",
   },
 
   resolve: {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 8080,
+    port: 3001,
   },
 
   module: {
@@ -43,7 +43,9 @@ module.exports = {
       name: "RocketScience",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./NewComponentTemplate": "./src/components/NewComponentTemplate"
+      },
       shared: {
         ...deps,
         react: {
@@ -55,9 +57,6 @@ module.exports = {
           requiredVersion: deps["react-dom"],
         },
       },
-    }),
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-    }),
+    })
   ],
 };
