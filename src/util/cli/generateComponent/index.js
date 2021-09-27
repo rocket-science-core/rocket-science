@@ -18,14 +18,7 @@ const makeComponentFile = (name) => {
   const componentFile = `import React from "react";
 import ${name}Wrapper from "./${name}.styles";
 
-interface ${name}Props {
-  /**
-   * Button label text
-   */
-  text?: string;
-}
-
-const ${name}  = ({ text }: ${name}Props) => {
+const ${name}  = ({ text }) => {
   return (
     <${name}Wrapper>
       <button className="styled-button">
@@ -78,7 +71,6 @@ export default ${name}Wrapper;`;
 
 const makeDefaultStoryFile = (name) => {
   const storyFile = `import React from "react";
-  import { ComponentStory, ComponentMeta } from "@storybook/react";
   const Readme = require("../README.md").default;
   
   import ${name} from "../${name}";
@@ -89,13 +81,13 @@ const makeDefaultStoryFile = (name) => {
     argTypes: {
       text: { control: "text" },
     },
-  } as ComponentMeta<typeof ${name}>;
+  };
   
   // ==============================
   // Traditional Node Render on Client Side
   // ==============================
   
-  const Template: ComponentStory<typeof ${name}> = (args) => (
+  const Template = (args) => (
     <${name} {...args} />
   );
   
@@ -120,7 +112,7 @@ const makeDefaultStoryFile = (name) => {
   };`;
 
   fs.writeFile(
-    `./src/components/${name}/stories/${name}.stories.tsx`,
+    `./src/components/${name}/stories/${name}.stories.jsx`,
     storyFile,
     { flag: "w" },
     function (err) {
@@ -131,14 +123,13 @@ const makeDefaultStoryFile = (name) => {
 
 const makeFederatedStoryFile = (name) => {
   const storyFile = `import React from "react";
-  import { ComponentStory, ComponentMeta } from "@storybook/react";
   import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
   const Readme = require("../README.md").default;
   
   export default {
     title: "Examples/${name}/Federated",
     component: DynamicRemoteContainer,
-  } as ComponentMeta<typeof DynamicRemoteContainer>;
+  };
   
   // ==============================
   // Module Federation MFE Render on Client Side
@@ -159,7 +150,7 @@ const makeFederatedStoryFile = (name) => {
   //
   // ==============================
   
-  // const ModFedTemplate: ComponentStory<typeof DynamicRemoteContainer> = ({
+  // const ModFedTemplate = ({
   //   url,
   //   scope,
   //   module: targetModule,
@@ -204,7 +195,7 @@ const makeFederatedStoryFile = (name) => {
   // };`;
 
   fs.writeFile(
-    `./src/components/${name}/stories/${name}Fed.stories.tsx`,
+    `./src/components/${name}/stories/${name}Fed.stories.jsx`,
     storyFile,
     { flag: "w" },
     function (err) {
