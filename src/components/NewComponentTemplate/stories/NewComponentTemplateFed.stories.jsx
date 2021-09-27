@@ -1,12 +1,11 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
 import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
 const Readme = require("../README.md").default;
 
 export default {
   title: "Examples/NewComponentTemplate/Federated",
   component: DynamicRemoteContainer,
-} as ComponentMeta<typeof DynamicRemoteContainer>;
+};
 
 // ==============================
 // Module Federation MFE Render on Client Side
@@ -27,7 +26,7 @@ export default {
 //
 // ==============================
 
-const ModFedTemplate: ComponentStory<typeof DynamicRemoteContainer> = ({
+const ModFedTemplate = ({
   url,
   scope,
   module: targetModule,

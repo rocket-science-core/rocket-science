@@ -1,5 +1,4 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
 const Readme = require("../README.md").default;
 
 import NewComponentTemplate from "../NewComponentTemplate";
@@ -10,13 +9,13 @@ export default {
   argTypes: {
     text: { control: "text" },
   },
-} as ComponentMeta<typeof NewComponentTemplate>;
+};
 
 // ==============================
 // Traditional Node Render on Client Side
 // ==============================
 
-const Template: ComponentStory<typeof NewComponentTemplate> = (args) => (
+const Template = (args) => (
   <NewComponentTemplate {...args} />
 );
 
