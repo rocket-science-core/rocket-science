@@ -41,19 +41,7 @@ const useDynamicScript = (url) => {
   };
 };
 
-export interface DynamicRemoteContainerProps {
-  url?: string;
-  scope?: string;
-  module?: string;
-  componentProps?: { [key: string]: any } | any;
-}
-
-const DynamicRemoteContainer = ({
-  url,
-  scope,
-  module: targetModule,
-  componentProps,
-}: DynamicRemoteContainerProps) => {
+const DynamicRemoteContainer = ({ url, scope, module, componentProps }) => {
   const { ready, failed } = useDynamicScript(url);
 
   if (!ready) {
@@ -69,6 +57,7 @@ const DynamicRemoteContainer = ({
       new Promise((resolve) => {
         const moduleResolve = resolve;
         const react = require("react");
+        const styledComponents = require("styled-components");
         const legacyShareScope = {
           react: {
             [react.version]: {
@@ -77,11 +66,19 @@ const DynamicRemoteContainer = ({
               from: "webpack4",
             },
           },
+          styledComponents: {
+            [styledComponents.version]: {
+              get: () =>
+                new Promise((resolve) => resolve(() => styledComponents)),
+              loaded: true,
+              from: "webpack4",
+            },
+          },
         };
         new Promise((resolve) => {
           resolve(window[scope].init(legacyShareScope));
         }).then(() => {
-          window[scope].get(targetModule).then((factory) => {
+          window[scope].get(module).then((factory) => {
             moduleResolve(factory());
           });
         });
