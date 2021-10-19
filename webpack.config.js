@@ -1,14 +1,10 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 
-const deps = require("./package.json").dependencies;
+const deps = require('./package.json').dependencies
 module.exports = {
   output: {
-    publicPath: "http://localhost:3001/",
-  },
-
-  resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".md"],
+    publicPath: 'http://localhost:3001/',
   },
 
   devServer: {
@@ -19,32 +15,45 @@ module.exports = {
     rules: [
       {
         test: /\.m?js/,
-        type: "javascript/auto",
+        type: 'javascript/auto',
         resolve: {
           fullySpecified: false,
         },
       },
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
     ],
   },
 
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.md'],
+  },
+
   plugins: [
     new ModuleFederationPlugin({
-      name: "RocketScience",
-      filename: "remoteEntry.js",
+      name: 'RocketScience',
+      filename: 'remoteEntry.js',
       remotes: {},
       exposes: {
-        "./NewComponentTemplate": "./src/components/NewComponentTemplate"
+        './NewComponentTemplate': './src/components/NewComponentTemplate',
       },
       shared: {
         ...deps,
@@ -52,11 +61,11 @@ module.exports = {
           singleton: true,
           requiredVersion: deps.react,
         },
-        "react-dom": {
+        'react-dom': {
           singleton: true,
-          requiredVersion: deps["react-dom"],
+          requiredVersion: deps['react-dom'],
         },
       },
-    })
+    }),
   ],
-};
+}

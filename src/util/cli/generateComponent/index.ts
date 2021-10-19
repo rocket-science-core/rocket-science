@@ -1,21 +1,21 @@
-var inquirer = require("inquirer");
-const fs = require("fs");
-const webpackConfig = require("../../../../webpack.config.js");
+var inquirer = require('inquirer')
+const fs = require('fs')
+const webpackConfig = require('../../../../webpack.config.js')
 
-const makeIndexFile = (name) => {
-  const indexFile = `export { default } from './${name}';\nexport * from './${name}';`;
+const makeIndexFile = name => {
+  const indexFile = `export { default } from './${name}';\nexport * from './${name}';`
   fs.writeFile(
     `./src/components/${name}/index.ts`,
     indexFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
-};
+      if (err) return console.error(err)
+    },
+  )
+}
 
-const makeComponentFile = (name) => {
-  const componentFile = `import React from "react";
+const makeComponentFile = ({name, styleType}) => {
+  const styledComponent = `import React from "react";
 import ${name}Wrapper from "./${name}.styles";
 
 interface ${name}Props {
@@ -38,19 +38,44 @@ const ${name}  = ({ text }: ${name}Props) => {
 // export const Memoized${name} = React.memo(${name});
 // export { ${name} };
 export default ${name};
-  `;
+  `
+  const cssModuleComponent = `import React from "react";
+import * as styles from "./${name}.module.css";
+
+interface ${name}Props {
+  /**
+   * Button label text
+   */
+  text?: string;
+}
+
+const ${name}  = ({ text }: ${name}Props) => {
+  return (
+      <button className={styles.sButton}>
+        {text ? text : "no prop value provided"}
+      </button>
+  );
+};
+
+// export const Memoized${name} = React.memo(${name});
+// export { ${name} };
+export default ${name};
+  `
+
+  const componentFile =
+    styleType === 'Styled' ? styledComponent : cssModuleComponent
 
   fs.writeFile(
     `./src/components/${name}/${name}.tsx`,
     componentFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
-};
+      if (err) return console.error(err)
+    },
+  )
+}
 
-const makeStylesFile = (name) => {
+const makeStylesFile = name => {
   const stylesFile =
     `import styled from 'styled-components';
 
@@ -58,25 +83,41 @@ const ${name}Wrapper = styled.div\`` +
     `
     /* background-color: red;
 
-    > .styled-button {
+    > .button {
         background-color: blue;
     } */
 \`` +
     `
 
-export default ${name}Wrapper;`;
+export default ${name}Wrapper;`
 
   fs.writeFile(
     `./src/components/${name}/${name}.styles.ts`,
     stylesFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
-};
+      if (err) return console.error(err)
+    },
+  )
+}
 
-const makeDefaultStoryFile = (name) => {
+const makeCssModulesFile = name => {
+  const stylesFile = `.sButton {
+        background-color: blue;
+    }
+`
+
+  fs.writeFile(
+    `./src/components/${name}/${name}.module.css`,
+    stylesFile,
+    {flag: 'w'},
+    function (err) {
+      if (err) return console.error(err)
+    },
+  )
+}
+
+const makeDefaultStoryFile = name => {
   const storyFile = `import React from "react";
   import { ComponentStory, ComponentMeta } from "@storybook/react";
   const Readme = require("../README.md").default;
@@ -117,19 +158,19 @@ const makeDefaultStoryFile = (name) => {
     readme: {
       sidebar: Readme,
     },
-  };`;
+  };`
 
   fs.writeFile(
     `./src/components/${name}/stories/${name}.stories.tsx`,
     storyFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
-};
+      if (err) return console.error(err)
+    },
+  )
+}
 
-const makeFederatedStoryFile = (name) => {
+const makeFederatedStoryFile = name => {
   const storyFile = `import React from "react";
   import { ComponentStory, ComponentMeta } from "@storybook/react";
   import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
@@ -201,20 +242,20 @@ const makeFederatedStoryFile = (name) => {
   //   readme: {
   //     sidebar: Readme,
   //   },
-  // };`;
+  // };`
 
   fs.writeFile(
     `./src/components/${name}/stories/${name}Fed.stories.tsx`,
     storyFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
-};
+      if (err) return console.error(err)
+    },
+  )
+}
 
-const makeTestsFile = (name) => {
-    const testsFile = `import React from "react";
+const makeTestsFile = name => {
+  const testsFile = `import React from "react";
 import { render } from "@testing-library/react";
 import ${name} from "./${name}";
 
@@ -228,20 +269,20 @@ it("${name} renders text prop", () => {
 it("${name} renders with no prop value provided", () => {
     const { getByText } = render(<${name} text={""} />);
     expect(getByText("no prop value provided")).toBeTruthy();
-});`;
+});`
 
-fs.writeFile(
+  fs.writeFile(
     `./src/components/${name}/${name}.test.tsx`,
     testsFile,
-    { flag: "w" },
+    {flag: 'w'},
     function (err) {
-      if (err) return console.error(err);
-    }
-  );
+      if (err) return console.error(err)
+    },
+  )
 }
 
-const makeReadmeFile = (name) => {
-    const readmeFile = `# 📝 Summary
+const makeReadmeFile = name => {
+  const readmeFile = `# 📝 Summary
 
 This is an example component intended to outline the expected code quality for a new component introduced to the code base.
 
@@ -260,65 +301,72 @@ import ${name} from './filePathTo/${name}';
 | Name | Required | Type   | DefaultValue | Description  |
 | ---- | -------- | ------ | ------------ | ------------ |
 | text | ❌       | string | -            | button label |
-    `;
+    `
 
-    fs.writeFile(
-        `./src/components/${name}/README.md`,
-        readmeFile,
-        { flag: "w" },
-        function (err) {
-          if (err) return console.error(err);
-        }
-      );
+  fs.writeFile(
+    `./src/components/${name}/README.md`,
+    readmeFile,
+    {flag: 'w'},
+    function (err) {
+      if (err) return console.error(err)
+    },
+  )
 }
 
 inquirer
   .prompt([
     /* Pass your questions in here */
     {
-      type: "input",
-      name: "name",
-      message: "What is the name of the component?",
-      default: "MyComponent",
+      type: 'input',
+      name: 'name',
+      message: 'What is the name of the component?',
+      default: 'MyComponent',
     },
     {
-      type: "list",
-      name: "componentType",
-      choices: ["Federated Organism", "Feature Level Component"],
-      message: "Is this a federated organism or a feature level component?"
-    }
+      type: 'list',
+      name: 'componentType',
+      choices: ['Federated Organism', 'Feature Level Component'],
+      message: 'Is this a federated organism or a feature level component?',
+    },
+    {
+      type: 'list',
+      name: 'styleType',
+      choices: ['Styled', 'CSS Module'],
+      message: 'What type of css will this component use',
+    },
   ])
-  .then((answers) => {
-    const { name, componentType } = answers;
+  .then(answers => {
+    const {name, componentType, styleType} = answers
     // Use user feedback for... whatever!!
     // console.log(answers);
-    
-    const dir = `./src/components/${name}`;
-    const storiesDir = dir + `/stories`;
+
+    const dir = `./src/components/${name}`
+    const storiesDir = dir + `/stories`
 
     if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-      makeIndexFile(name);
-      makeComponentFile(name);
-      makeStylesFile(name);
-      makeTestsFile(name);
-      makeReadmeFile(name);
+      fs.mkdirSync(dir, {recursive: true})
+      makeIndexFile(name)
+      makeComponentFile({name, styleType})
+      makeTestsFile(name)
+      makeReadmeFile(name)
+      styleType === 'Styled' ? makeStylesFile(name) : makeCssModulesFile(name)
     }
+
     if (!fs.existsSync(storiesDir)) {
-      fs.mkdirSync(storiesDir, { recursive: false });
-      makeDefaultStoryFile(name);
-      if (componentType === "Federated Organism"){
-        makeFederatedStoryFile(name);
+      fs.mkdirSync(storiesDir, {recursive: false})
+      makeDefaultStoryFile(name)
+      if (componentType === 'Federated Organism') {
+        makeFederatedStoryFile(name)
       }
     }
   })
-  .catch((error) => {
+  .catch(error => {
     if (error.isTtyError) {
       // Prompt couldn't be rendered in the current environment
 
-      console.log("nice try");
+      console.log('nice try')
     } else {
       // Something else went wrong
-      console.log("nice try");
+      console.log('nice try')
     }
-  });
+  })
