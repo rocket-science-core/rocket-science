@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import NewComponentTemplateWrapper from './NewComponentTemplate.styles'
+import NewComponentTemplateWrapper from './NewComponentTemplate.styles'
 
 interface NewComponentTemplateProps {
   /**
@@ -8,14 +8,6 @@ interface NewComponentTemplateProps {
    */
   text?: string
 }
-
-const NewComponentTemplateWrapper = styled.div`
-  /* background-color: red;
-
-    > .styled-button {
-        background-color: blue;
-    } */
-`
 
 const NewComponentTemplate = ({text}: NewComponentTemplateProps) => {
   return (

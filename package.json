@@ -10,7 +10,6 @@
     "node": "15 || 16 || 17",
     "npm": ">=6"
   },
-  "main": "dist/main.js",
   "scripts": {
     "build": "webpack --mode production",
     "watch": "webpack --mode production --watch",
@@ -20,13 +19,13 @@
     "test:watch": "jest --json --outputFile=.jest-test-results.json --watch || true",
     "start": "webpack-dev-server --open --mode development --watch",
     "start:live": "webpack-dev-server --open --mode development --liveReload",
-    "launch": "rm -rf ./dist && concurrently -k \"npm run watch:dev\" \"npm run storybook\" \"npm run federate\"",
+    "launch": "rm -rf ./dist && concurrently -k \"yarn watch:dev\" \"yarn storybook\" \"yarn federate\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
     "setup": "node setup",
-    "validate": "npm run test",
-    "generate-component": "node ./src/util/cli/generateComponent/index.ts && npm run test "
+    "validate": "yarn test",
+    "generate-component": "node ./src/util/cli/generateComponent/index.ts && yarn test "
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
@@ -49,7 +48,6 @@
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.1",
     "css-loader": "^3.5.3",
-    "html-webpack-plugin": "^4.5.0",
     "inquirer": "^8.1.4",
     "jest": "^27.2.0",
     "marked": "^3.0.4",

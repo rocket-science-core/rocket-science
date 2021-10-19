@@ -1,13 +1,7 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 
 const deps = require('./package.json').dependencies
 
-// alias: {
-//   '@src': path.resolve(__dirname, '../src'),
-// },
-// // @ts-ignore
-// entry: './src/index.ts',
 module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.md'],
@@ -15,7 +9,6 @@ module.exports = {
 
   output: {
     publicPath: 'http://localhost:3001/',
-    hashFunction: 'xxhash64',
   },
 
   devServer: {

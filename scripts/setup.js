@@ -88,14 +88,14 @@ function main() {
   result = run(
     'Dependency Installation',
     'Installing third party code dependencies so the workshop works properly on this computer.',
-    'npm install',
+    'yarn',
   )
   if (result === FAILURE) return
 
   result = run(
     'Project Validation',
     'Running validation checks to ensure dependencies were installed properly',
-    'npm run validate -s',
+    'yarn validate -s',
   )
   if (result === FAILURE) return
 
