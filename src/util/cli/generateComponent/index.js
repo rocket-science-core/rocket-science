@@ -1,5 +1,8 @@
 var inquirer = require("inquirer");
 const fs = require("fs");
+// const path = require('path')
+// const dirPath = path.join(__dirname, '/src/')
+
 const webpackConfig = require("../../../../webpack.config.js");
 
 const makeIndexFile = (name) => {
@@ -205,7 +208,7 @@ const makeFederatedStoryFile = (name) => {
 };
 
 const makeTestsFile = (name) => {
-    const testsFile = `import React from "react";
+  const testsFile = `import React from "react";
 import { render } from "@testing-library/react";
 import ${name} from "./${name}";
 
@@ -221,7 +224,7 @@ it("${name} renders with no prop value provided", () => {
     expect(getByText("no prop value provided")).toBeTruthy();
 });`;
 
-fs.writeFile(
+  fs.writeFile(
     `./src/components/${name}/${name}.test.jsx`,
     testsFile,
     { flag: "w" },
@@ -229,10 +232,10 @@ fs.writeFile(
       if (err) return console.error(err);
     }
   );
-}
+};
 
 const makeReadmeFile = (name) => {
-    const readmeFile = `# 📝 Summary
+  const readmeFile = `# 📝 Summary
 
 This is an example component intended to outline the expected code quality for a new component introduced to the code base.
 
@@ -253,15 +256,15 @@ import ${name} from './filePathTo/${name}';
 | text | ❌       | string | -            | button label |
     `;
 
-    fs.writeFile(
-        `./src/components/${name}/README.md`,
-        readmeFile,
-        { flag: "w" },
-        function (err) {
-          if (err) return console.error(err);
-        }
-      );
-}
+  fs.writeFile(
+    `./src/components/${name}/README.md`,
+    readmeFile,
+    { flag: "w" },
+    function (err) {
+      if (err) return console.error(err);
+    }
+  );
+};
 
 inquirer
   .prompt([
@@ -276,14 +279,14 @@ inquirer
       type: "list",
       name: "componentType",
       choices: ["Federated Organism", "Feature Level Component"],
-      message: "Is this a federated organism or a feature level component?"
-    }
+      message: "Is this a federated organism or a feature level component?",
+    },
   ])
   .then((answers) => {
     const { name, componentType } = answers;
     // Use user feedback for... whatever!!
     // console.log(answers);
-    
+
     const dir = `./src/components/${name}`;
     const storiesDir = dir + `/stories`;
 
@@ -298,7 +301,7 @@ inquirer
     if (!fs.existsSync(storiesDir)) {
       fs.mkdirSync(storiesDir, { recursive: false });
       makeDefaultStoryFile(name);
-      if (componentType === "Federated Organism"){
+      if (componentType === "Federated Organism") {
         makeFederatedStoryFile(name);
       }
     }
