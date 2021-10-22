@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const TestWrapper = styled.div`
+const NewComponentTemplateWrapper = styled.div`
   /* background-color: red;
 
     > .styled-button {
@@ -8,4 +8,4 @@ const TestWrapper = styled.div`
     } */
 `
 
-export default TestWrapper
+export default NewComponentTemplateWrapper 
