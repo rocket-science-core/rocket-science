@@ -1,14 +1,14 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const deps = require("./package.json").dependencies;
-module.exports = {
-  output: {
-    publicPath: "http://localhost:3001/",
-  },
 
+module.exports = {
   resolve: {
     extensions: [".jsx", ".js", ".json", ".md"],
+  },
+
+  output: {
+    publicPath: "http://localhost:3001/",
   },
 
   devServer: {
@@ -44,7 +44,7 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./NewComponentTemplate": "./src/components/NewComponentTemplate"
+        "./NewComponentTemplate": "./src/components/NewComponentTemplate",
       },
       shared: {
         ...deps,
@@ -57,6 +57,6 @@ module.exports = {
           requiredVersion: deps["react-dom"],
         },
       },
-    })
+    }),
   ],
 };
