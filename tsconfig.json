@@ -8,5 +8,6 @@
     "typeRoots": ["node_modules/@types", "./src/globals.d.ts"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/util/cli/generateComponent/index.ts"]
+  "exclude": ["node_modules", "src/util/cli/generateComponent/index.ts"],
+  "typeRoots": ["node_modules/@types", "globals.d.ts"]
 }

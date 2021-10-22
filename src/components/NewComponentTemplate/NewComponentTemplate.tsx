@@ -1,23 +1,24 @@
-import React from "react";
-import NewComponentTemplateWrapper from "./NewComponentTemplate.styles";
+import React from 'react'
+import styled from 'styled-components'
+import NewComponentTemplateWrapper from './NewComponentTemplate.styles'
 
 interface NewComponentTemplateProps {
   /**
    * Button label text
    */
-  text?: string;
+  text?: string
 }
 
-const NewComponentTemplate = ({ text }: NewComponentTemplateProps) => {
+const NewComponentTemplate = ({text}: NewComponentTemplateProps) => {
   return (
     <NewComponentTemplateWrapper>
       <button className="styled-button">
-        {text ? text : "no prop value provided"}
+        {text ? text : 'no prop value provided'}
       </button>
     </NewComponentTemplateWrapper>
-  );
-};
+  )
+}
 
 // export const MemoizedNewComponentTemplate = React.memo(NewComponentTemplate);
 // export { NewComponentTemplate };
-export default NewComponentTemplate;
+export default NewComponentTemplate
