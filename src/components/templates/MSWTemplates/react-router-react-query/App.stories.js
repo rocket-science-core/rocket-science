@@ -5,7 +5,7 @@ import { rest } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Examples/MSW Demos/React Router + RQ',
+  title: 'Templates & Guides/MSW Demos/React Router + RQ',
   component: App,
 };
 

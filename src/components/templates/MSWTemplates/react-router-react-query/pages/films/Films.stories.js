@@ -1,18 +1,23 @@
 import React from 'react';
+import { MemoryRouter as Router, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { rest } from 'msw';
-import { App } from './App';
+import Films from './Films';
 
 export default {
-  title: 'Examples/MSW Demos/React Query',
-  component: App,
+  title: 'Templates & Guides/MSW Demos/React Router + RQ/Page Stories/Films',
+  component: Films,
 };
 
 const defaultQueryClient = new QueryClient();
 
 export const DefaultBehavior = () => (
   <QueryClientProvider client={defaultQueryClient}>
-    <App />
+    <Router initialEntries={['/films']}>
+      <Route exact path="/films">
+        <Films />
+      </Route>
+    </Router>
   </QueryClientProvider>
 );
 
@@ -26,27 +31,13 @@ const mockedQueryClient = new QueryClient({
 
 const MockTemplate = () => (
   <QueryClientProvider client={mockedQueryClient}>
-    <App />
+    <Router initialEntries={['/films']}>
+      <Route exact path="/films">
+        <Films />
+      </Route>
+    </Router>
   </QueryClientProvider>
 );
-
-const films = [
-  {
-    title: 'A New Hope',
-    episode_id: 4,
-    opening_crawl: `(Mocked) Rebel spaceships have won their first victory against the evil Galactic Empire.`,
-  },
-  {
-    title: 'Empire Strikes Back',
-    episode_id: 5,
-    opening_crawl: `(Mocked) Imperial troops are pursuing the Rebel forces across the galaxy.`,
-  },
-  {
-    title: 'Return of the Jedi',
-    episode_id: 6,
-    opening_crawl: `(Mocked) Luke Skywalker has returned to his home planet of Tatooine to rescue Han Solo.`,
-  },
-];
 
 export const MockedSuccess = MockTemplate.bind({});
 MockedSuccess.parameters = {
@@ -54,7 +45,20 @@ MockedSuccess.parameters = {
     rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
       return res(
         ctx.json({
-          results: films,
+          results: [
+            {
+              title: '(Mocked) A New Hope',
+              episode_id: 4,
+              release_date: '1977-05-25',
+              url: 'http://swapi.dev/api/films/1/',
+            },
+            {
+              title: '(Mocked) Empire Strikes Back',
+              episode_id: 5,
+              release_date: '1980-05-17',
+              url: 'http://swapi.dev/api/films/2/',
+            },
+          ],
         }),
       );
     }),

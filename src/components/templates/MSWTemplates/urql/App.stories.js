@@ -1,15 +1,33 @@
 import React from 'react';
-import { rest } from 'msw';
+import { createClient, Provider } from 'urql';
+import { graphql } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Examples/MSW Demos/Fetch',
+  title: 'Templates & Guides/MSW Demos/Urql',
   component: App,
 };
 
-export const DefaultBehavior = () => <App />;
+const defaultClient = createClient({
+  url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+});
 
-const MockTemplate = () => <App />;
+export const DefaultBehavior = () => (
+  <Provider value={defaultClient}>
+    <App />
+  </Provider>
+);
+
+const mockedClient = createClient({
+  url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+  requestPolicy: 'network-only',
+});
+
+const MockTemplate = () => (
+  <Provider value={mockedClient}>
+    <App />
+  </Provider>
+);
 
 const films = [
   {
@@ -32,10 +50,12 @@ const films = [
 export const MockedSuccess = MockTemplate.bind({});
 MockedSuccess.parameters = {
   msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
+    graphql.query('AllFilmsQuery', (req, res, ctx) => {
       return res(
-        ctx.json({
-          results: films,
+        ctx.data({
+          allFilms: {
+            films,
+          },
         }),
       );
     }),
@@ -45,10 +65,14 @@ MockedSuccess.parameters = {
 export const MockedError = MockTemplate.bind({});
 MockedError.parameters = {
   msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
+    graphql.query('AllFilmsQuery', (req, res, ctx) => {
       return res(
         ctx.delay(800),
-        ctx.status(403),
+        ctx.errors([
+          {
+            message: 'Access denied',
+          },
+        ]),
       );
     }),
   ],

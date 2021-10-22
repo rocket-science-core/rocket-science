@@ -2,20 +2,20 @@ import React from 'react';
 import { MemoryRouter as Router, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { rest } from 'msw';
-import Films from './Films';
+import Characters from './Characters';
 
 export default {
-  title: 'Examples/MSW Demos/React Router + RQ/Page Stories/Films',
-  component: Films,
+  title: 'Templates & Guides/MSW Demos/React Router + RQ/Page Stories/Characters',
+  component: Characters,
 };
 
 const defaultQueryClient = new QueryClient();
 
 export const DefaultBehavior = () => (
   <QueryClientProvider client={defaultQueryClient}>
-    <Router initialEntries={['/films']}>
-      <Route exact path="/films">
-        <Films />
+    <Router initialEntries={['/characters']}>
+      <Route exact path="/characters">
+        <Characters />
       </Route>
     </Router>
   </QueryClientProvider>
@@ -31,9 +31,9 @@ const mockedQueryClient = new QueryClient({
 
 const MockTemplate = () => (
   <QueryClientProvider client={mockedQueryClient}>
-    <Router initialEntries={['/films']}>
-      <Route exact path="/films">
-        <Films />
+    <Router initialEntries={['/characters']}>
+      <Route exact path="/characters">
+        <Characters />
       </Route>
     </Router>
   </QueryClientProvider>
@@ -42,21 +42,17 @@ const MockTemplate = () => (
 export const MockedSuccess = MockTemplate.bind({});
 MockedSuccess.parameters = {
   msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
+    rest.get('https://swapi.dev/api/people/', (req, res, ctx) => {
       return res(
         ctx.json({
           results: [
             {
-              title: '(Mocked) A New Hope',
-              episode_id: 4,
-              release_date: '1977-05-25',
-              url: 'http://swapi.dev/api/films/1/',
+              name: '(Mocked) Luke Skywalker',
+              url: 'http://swapi.dev/api/people/1/',
             },
             {
-              title: '(Mocked) Empire Strikes Back',
-              episode_id: 5,
-              release_date: '1980-05-17',
-              url: 'http://swapi.dev/api/films/2/',
+              name: '(Mocked) C-3PO',
+              url: 'http://swapi.dev/api/people/2/',
             },
           ],
         }),
@@ -68,7 +64,7 @@ MockedSuccess.parameters = {
 export const MockedError = MockTemplate.bind({});
 MockedError.parameters = {
   msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
+    rest.get('https://swapi.dev/api/people/', (req, res, ctx) => {
       return res(
         ctx.delay(800),
         ctx.status(403),

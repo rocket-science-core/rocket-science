@@ -1,10 +1,10 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
+import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContainer";
 const Readme = require("../README.md").default;
 
 export default {
-  title: "Examples/NewComponentTemplate/Federated",
+  title: "Templates & Guides/NewComponentTemplate/Federated",
   component: DynamicRemoteContainer,
 } as ComponentMeta<typeof DynamicRemoteContainer>;
 

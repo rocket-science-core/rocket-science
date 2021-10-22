@@ -1,32 +1,33 @@
 import React from 'react';
-import { createClient, Provider } from 'urql';
-import { graphql } from 'msw';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { rest } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Examples/MSW Demos/Urql',
+  title: 'Templates & Guides/MSW Demos/React Query',
   component: App,
 };
 
-const defaultClient = createClient({
-  url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
-});
+const defaultQueryClient = new QueryClient();
 
 export const DefaultBehavior = () => (
-  <Provider value={defaultClient}>
+  <QueryClientProvider client={defaultQueryClient}>
     <App />
-  </Provider>
+  </QueryClientProvider>
 );
 
-const mockedClient = createClient({
-  url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
-  requestPolicy: 'network-only',
+const mockedQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
 });
 
 const MockTemplate = () => (
-  <Provider value={mockedClient}>
+  <QueryClientProvider client={mockedQueryClient}>
     <App />
-  </Provider>
+  </QueryClientProvider>
 );
 
 const films = [
@@ -50,12 +51,10 @@ const films = [
 export const MockedSuccess = MockTemplate.bind({});
 MockedSuccess.parameters = {
   msw: [
-    graphql.query('AllFilmsQuery', (req, res, ctx) => {
+    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
       return res(
-        ctx.data({
-          allFilms: {
-            films,
-          },
+        ctx.json({
+          results: films,
         }),
       );
     }),
@@ -65,14 +64,10 @@ MockedSuccess.parameters = {
 export const MockedError = MockTemplate.bind({});
 MockedError.parameters = {
   msw: [
-    graphql.query('AllFilmsQuery', (req, res, ctx) => {
+    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
       return res(
         ctx.delay(800),
-        ctx.errors([
-          {
-            message: 'Access denied',
-          },
-        ]),
+        ctx.status(403),
       );
     }),
   ],
