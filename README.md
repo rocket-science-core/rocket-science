@@ -58,8 +58,9 @@ An opinionated UI Workbench featuring tools like react, styled components, types
 1. Run $ git clone [https://github.com/SketchLagoon/rocket-science.git](https://github.com/SketchLagoon/rocket-science.git)
 2. Run $ cd rocket-science
 3. Run $ yarn
-4. Run $ yarn test
-5. Run $ yarn story
+4. Run $ yarn prepare
+5. Run $ yarn test
+6. Run $ yarn story
    1. deletes ./dist folder holding previous builds
    2. runs webpack build in watch mode
       1. leaves the node process running to listen for changes
