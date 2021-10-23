@@ -24,6 +24,7 @@
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
     "setup": "node setup",
+    "prepare": "husky install",
     "validate": "yarn test",
     "generate-component": "node ./src/util/cli/generateComponent/index.ts && yarn test "
   },
@@ -48,6 +49,8 @@
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.1",
     "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.5.0",
+    "husky": "^7.0.4",
     "inquirer": "^8.1.4",
     "jest": "^27.2.0",
     "marked": "^3.0.4",
