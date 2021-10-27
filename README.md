@@ -60,7 +60,7 @@ An opinionated UI Workbench featuring tools like react, styled components, types
 3. Run $ yarn
 4. Run $ yarn setup
 5. Run $ yarn test
-6. Run $ yarn story
+6. Run $ yarn launch
    1. deletes ./dist folder holding previous builds
    2. runs webpack build in watch mode
       1. leaves the node process running to listen for changes
