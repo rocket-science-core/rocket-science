@@ -87,7 +87,7 @@ const makeDefaultStoryFile = name => {
   import ${name} from "../${name}";
   
   export default {
-    title: "Examples/${name}/Default",
+    title: "${name}/Default",
     component: ${name},
     argTypes: {
       text: { control: "text" },
@@ -135,11 +135,11 @@ const makeDefaultStoryFile = name => {
 const makeFederatedStoryFile = name => {
   const storyFile = `import React from "react";
   import { ComponentStory, ComponentMeta } from "@storybook/react";
-  import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
+  import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContainer";
   const Readme = require("../README.md").default;
   
   export default {
-    title: "Examples/${name}/Federated",
+    title: "${name}/Federated",
     component: DynamicRemoteContainer,
   } as ComponentMeta<typeof DynamicRemoteContainer>;
   
