@@ -45,7 +45,6 @@ module.exports = {
       remotes: {},
       exposes: {
         './NewComponentTemplate': './src/components/templates/NewComponentTemplate',
-        './NewHotness': './src/components/NewHotness'
       },
       shared: {
         ...deps,
