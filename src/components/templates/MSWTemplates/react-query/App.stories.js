@@ -4,7 +4,7 @@ import { rest } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Templates & Guides/MSW Demos/React Query',
+  title: 'Templates & Guides/Application Examples/React Query',
   component: App,
 };
 

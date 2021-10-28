@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Templates & Guides/MSW Demos/Fetch',
+  title: 'Templates & Guides/Application Examples/Fetch',
   component: App,
 };
 
