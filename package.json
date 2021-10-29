@@ -24,6 +24,7 @@
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
     "setup": "node setup",
+    "prepare": "husky install",
     "validate": "yarn test",
     "generate-component": "node ./src/util/cli/generateComponent/index.ts && yarn test ",
     "msw:update": "msw init public"
@@ -57,6 +58,7 @@
     "chromatic": "^5.5.0",
     "concurrently": "^6.2.1",
     "css-loader": "^3.5.3",
+    "husky": "^7.0.4",
     "graphql": "^15.4.0",
     "inquirer": "^8.1.4",
     "jest": "^27.2.0",
