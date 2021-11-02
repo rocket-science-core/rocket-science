@@ -1,3 +1,5 @@
+![rocket science header image](https://i.imgur.com/f743o61.png)
+
 # 📝 Summary
 
 An opinionated UI Workbench featuring tools like react, styled components, typescript, webpack, jest and storybook all bundled into an easy to use interface

@@ -4,7 +4,7 @@ import { graphql } from 'msw';
 import { App } from './App';
 
 export default {
-  title: 'Templates & Guides/MSW Demos/Apollo',
+  title: 'Templates & Guides/Application Examples/Apollo',
   component: App,
 };
 

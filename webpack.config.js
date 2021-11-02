@@ -44,7 +44,7 @@ module.exports = {
       filename: 'remoteEntry.js',
       remotes: {},
       exposes: {
-        './NewComponentTemplate': './src/components/NewComponentTemplate',
+        './NewComponentTemplate': './src/components/templates/NewComponentTemplate',
       },
       shared: {
         ...deps,

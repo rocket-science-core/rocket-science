@@ -5,7 +5,7 @@ import { rest } from 'msw';
 import Films from './Films';
 
 export default {
-  title: 'Templates & Guides/MSW Demos/React Router + RQ/Page Stories/Films',
+  title: 'Templates & Guides/Application Examples/React Router + RQ/Page Stories/Films',
   component: Films,
 };
 

@@ -87,7 +87,7 @@ const makeDefaultStoryFile = name => {
   import ${name} from "../${name}";
   
   export default {
-    title: "${name}/Default",
+    title: "Newly Generated/${name}/Default",
     component: ${name},
     argTypes: {
       text: { control: "text" },
@@ -135,11 +135,11 @@ const makeDefaultStoryFile = name => {
 const makeFederatedStoryFile = name => {
   const storyFile = `import React from "react";
   import { ComponentStory, ComponentMeta } from "@storybook/react";
-  import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContainer";
+  import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
   const Readme = require("../README.md").default;
   
   export default {
-    title: "${name}/Federated",
+    title: "Newly Generated/${name}/Federated",
     component: DynamicRemoteContainer,
   } as ComponentMeta<typeof DynamicRemoteContainer>;
   
@@ -287,8 +287,8 @@ inquirer
     {
       type: 'list',
       name: 'componentType',
-      choices: ['Federated Organism', 'Feature Level Component'],
-      message: 'Is this a federated organism or a feature level component?',
+      choices: ['Federated Feature', 'Atomic Level Component'],
+      message: 'Is this a Federated Feature or a Atomic Level Component?',
     },
   ])
   .then(answers => {
@@ -310,7 +310,7 @@ inquirer
     if (!fs.existsSync(storiesDir)) {
       fs.mkdirSync(storiesDir, {recursive: false})
       makeDefaultStoryFile(name)
-      if (componentType === 'Federated Organism') {
+      if (componentType === 'Federated Feature') {
         makeFederatedStoryFile(name)
       }
     }

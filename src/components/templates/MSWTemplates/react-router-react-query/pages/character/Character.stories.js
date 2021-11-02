@@ -5,7 +5,7 @@ import { rest } from 'msw';
 import Character from './Character';
 
 export default {
-  title: 'Templates & Guides/MSW Demos/React Router + RQ/Page Stories/Character',
+  title: 'Templates & Guides/Application Examples/React Router + RQ/Page Stories/Character',
   component: Character,
 };
 
