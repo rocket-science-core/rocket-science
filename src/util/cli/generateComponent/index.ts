@@ -158,7 +158,7 @@ const makeFederatedStoryFile = name => {
   //
   // 2. Uncomment the code below
   //
-  // 3. Run $ yarn story
+  // 3. Run $ yarn launch
   //
   // ==============================
   

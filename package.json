@@ -19,7 +19,7 @@
     "test:watch": "jest --json --outputFile=.jest-test-results.json --watch || true",
     "start": "webpack-dev-server --open --mode development --watch",
     "start:live": "webpack-dev-server --open --mode development --liveReload",
-    "launch": "rm -rf ./dist && concurrently -k \"yarn watch:dev\" \"yarn storybook\" \"yarn federate\"",
+    "launch": "rm -rf ./dist && concurrently -k \"yarn watch:dev\" \"yarn storybook --no-manager-cache\" \"yarn federate\"",
     "storybook": "start-storybook -s public -p 6006",
     "build-storybook": "build-storybook",
     "federate": "serve ./dist -p 3001",
