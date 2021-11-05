@@ -1,57 +1,84 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import LinkTo from '@storybook/addon-links/react'
 
-<Meta title="Templates & Guides/Tooling Guides/Rocket Science/Getting Started" />
+<Meta title="Templates & Guides/Tooling Guides/Rocket Science Introduction" />
 
 <header className="introduction-header">
   <img src="https://i.imgur.com/0BSLz9v.png" width="500" />
-  <h1>Getting Started</h1>
 </header>
 
 <br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
-## 1. Create a new Rocket Science application
+# 🚀 Introducing Rocket Science
 
-`$ npx create-rs-app`
+UI development continues to scale in complexity as the line between front and backend gets thinner and thinner. Rocket Science aims to lower the barrier to entry for creating or contributing to a frontend project. We hope to enable you to develop, document, test, and publish your UI components for your diverse needs in an environment isolated from the context of your Frontend Application. 
 
-This will clone and customize the Rocket Science repository based on the choices made during the CLI prompts after the command is run. 
+<br/>
+<br/>
+
+# 🎯 Our Goals
 
 <br/>
 
-## 2. Provide the CLI the name of your project
+## Micro Frontends made easy
 
-`$ NewRocketScienceApplication`
+Rocket Science aims to lower the barrier to entry for generating boilerplate Micro Frontends that leverage Webpack 5's Module Federation under the hood. With our comprehensive documentation surrounding the topic and our opinionated solutions, we've made it as simple as possible to get started with solid and reliable infrastructure patterns. 
 
-This will determine the name of not only the parent directory of the application, but also the name provided to the `ModuleFederationPlugin` in the `./webpack.config.js`
+## Build UI components in isolation
+
+Often when building complex user interfaces, engineers will develop a feature or component under the context of it’s implementation. This can result in difficult to triage side effects that were completely unintentional edge cases. The cause of these side effects is often the mixing of Business Logic and UI Logic, which can also severely restrict reusability of the component. 
+
+## Component generation from our CLI tool
+
+We decided to create a template component that could be dynamically customized based on developer inputted needs throughout a series of questions asked through a CLI tool. In it’s current state, it will only generate components to the Rocket Science core team’s opinionated standards/best practices - but we do intend to expand a broader degree of supported technologies and opinions in the future. 
+
+## Component Level Documentation
+
+After generating a new component with our CLI tool, you may notice a README.md file accompanies each component. This README.md file will serve as a component-specific docs file where developers who maintain the component are expected to update any changes reflected to the *Summary*, *Usage* or *Props* of this component. In addition to these already included details, we encourage developers to also take note of any nuance or tribal knowledge surrounding this component that they may identify while working on it. 
+
+## Comprehensive unit test coverage
+
+In order to reduce side effects / defects / bugs in newly developed features as well as limit the scope of potential impact when updating those features, a high threshold of unit test coverage is expected. In order to aid in this effort, our component generator also adds simple “Does it render with props” and “Does it render without props” tests using Jest and React Testing Library.  
+
+## Multiple Render Methods
+
+As fast as the web is changing, so are the methods for rendering the content displayed to the end users. Client Side Render (CSR) has been the most common method for this, but only because it is the most simple in execution. Server Side Render (SSR) is quickly becoming a staple within the industry as well, as it provides significant benefits to things like performance and SEO. Rocket Science is aiming to support as many Render Methods as possible, but currently we only support Client Side Rendering. This satisfies our current needs to enable Micro Frontends leveraging Webpack 5's Module Federation, which is still working on SSR support with an intuitive integration. 
+
+## Deployed Storybook For All Disciplines
+
+Storybook enables us to deploy it's dashboard as it's own application, which can be used as an easy but powerful method to convey updates on work-in-progress across disciplines at your organization. Rather than having engineers receiving endless pings for updates, they can simply link a deployment of storybook that reflects the most up to date status of the efforts in question. With Storybook Addons, this becomes an even more powerful tool for all involved parties (including Business, Product and Design). 
+
+## Storybook Addons
+
+Leveraging the addons included, anyone with access to the most recent deployment of your team's storybook can view a wide array of information. 
+
+in the **Readme** tab, the component level docs from above will be displayed. Not only are developers able to benefit from this while working in their code editor, but so are other disciplines who can build a better understanding of blockers/hurdles that may be in the context of their scope of work. 
+
+In the **Tests** tab, folks will be able to find out how many tests are written for the component they're viewing, and how many are passing/failing/pending/todo. 
+
+in the **Accessibility** tab, an audit for ADA compliance will be run to check for things like contrast ratios of background/text colors, aria labels and unique IDs. 
+
+In the **Controls** tab, users are able to modify the dynamic values that each component receives as props. This will enable even non-developers to test edge cases where the data passed as props may come in some unaccounted-for manner, or even to identify new cases to test against. 
+
+In the **Performance** tab it will display metrics surrounding component performance from the initial request to the server all the way to the end render on the client side. From here it's also possible to pin a set of results as a baseline to compare newly generated results against, as well as save/load results for reuse later.
 
 <br/>
-
-## 3. Change directories into your newly generated project
-
-`$ cd NewRocketScienceApplication`
-
 <br/>
 
-## 4. Run the setup script
+# ⚙ Technologies
 
-`$ yarn setup`
+- React
 
-1. installs dependencies
-2. runs unit tests to create .jest-test-results.json for tests storybook addon
+- Typescript
 
-<br/>
+- Storybook
 
-## 5. Start the newly generated Rocket Science Application
+- Webpack
 
-`$ yarn launch`
+- Styled Components
 
-1. deletes ./dist folder holding previous builds
-2. runs webpack build in watch mode
-    1. leaves the node process running to listen for changes
-    2. generates new build on saved changes
-3. starts storybook
-4. starts federated module CDN server on port 3001
-
-<br/>
-
-## 6. Check out the newly opened tab on [localhost:6006](http://localhost:6006)
+- Jest

@@ -74,4 +74,4 @@ const restHandlers = {
 };
 
 export default restHandlers;
-export { restHandlers, graphqlHandlers, apolloMSW, reactQueryMSW, urqlMSW };
+export { restHandlers, reactQueryMSW, graphqlHandlers, apolloMSW, urqlMSW };
