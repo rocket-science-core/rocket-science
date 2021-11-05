@@ -1,19 +1,20 @@
-import React from 'react';
-import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { rest } from 'msw';
-import Film from './Film';
+import React from "react";
+import { MemoryRouter as Router, Route } from "react-router-dom";
+import { QueryClientProvider } from "react-query";
+import { restHandlers, reactQueryMSW } from "../../../../../../routes";
+import storybookNamespaceConfig from "../../../../../../stories";
+import Film from "./Film";
+
+const { defaultQueryClient, mockedQueryClient } = reactQueryMSW;
 
 export default {
-  title: 'Templates & Guides/Application Examples/React Router + RQ/Page Stories/Film',
+  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ/Page Stories/Film`,
   component: Film,
 };
 
-const defaultQueryClient = new QueryClient();
-
 export const DefaultBehavior = () => (
   <QueryClientProvider client={defaultQueryClient}>
-    <Router initialEntries={['/films/1']}>
+    <Router initialEntries={["/films/1"]}>
       <Route exact path="/films/:filmId">
         <Film />
       </Route>
@@ -21,17 +22,9 @@ export const DefaultBehavior = () => (
   </QueryClientProvider>
 );
 
-const mockedQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
 const MockTemplate = () => (
   <QueryClientProvider client={mockedQueryClient}>
-    <Router initialEntries={['/films/1']}>
+    <Router initialEntries={["/films/1"]}>
       <Route exact path="/films/:filmId">
         <Film />
       </Route>
@@ -40,72 +33,18 @@ const MockTemplate = () => (
 );
 
 export const MockedSuccess = MockTemplate.bind({});
-MockedSuccess.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/films/1', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          title: '(Mocked) A New Hope',
-          episode_id: 4,
-          opening_crawl: `Rebel spaceships have won their first victory against the evil Galactic Empire.`,
-          characters: ['http://swapi.dev/api/people/1/', 'http://swapi.dev/api/people/2/'],
-        }),
-      );
-    }),
-    rest.get('https://swapi.dev/api/people/1', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          name: '(Mocked) Luke Skywalker',
-        }),
-      );
-    }),
-    rest.get('https://swapi.dev/api/people/2', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          name: '(Mocked) C-3PO',
-        }),
-      );
-    }),
-  ],
-};
+const MockedSuccessRoutes = Object.values(restHandlers.MockedSuccess);
+MockedSuccess.parameters = { msw: MockedSuccessRoutes };
 
 export const MockedFilmApiError = MockTemplate.bind({});
-MockedFilmApiError.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/films/1', (req, res, ctx) => {
-      return res(
-        ctx.delay(800),
-        ctx.status(403),
-      );
-    }),
-  ],
-};
+const MockedErrorRoutes = Object.values(restHandlers.MockedError);
+MockedFilmApiError.parameters = { msw: MockedErrorRoutes };
 
 export const MockedCharacterApiError = MockTemplate.bind({});
 MockedCharacterApiError.parameters = {
   msw: [
-    rest.get('https://swapi.dev/api/films/1', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          title: '(Mocked) A New Hope',
-          episode_id: 4,
-          opening_crawl: `Rebel spaceships have won their first victory against the evil Galactic Empire.`,
-          characters: ['http://swapi.dev/api/people/1/', 'http://swapi.dev/api/people/2/'],
-        }),
-      );
-    }),
-    rest.get('https://swapi.dev/api/people/1', (req, res, ctx) => {
-      return res(
-        ctx.delay(800),
-        ctx.status(403),
-      );
-    }),
-    rest.get('https://swapi.dev/api/people/2', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          name: '(Mocked) C-3PO',
-        }),
-      );
-    }),
+    restHandlers.MockedSuccess.filmOne,
+    restHandlers.MockedError.personOne,
+    restHandlers.MockedSuccess.personTwo,
   ],
 };

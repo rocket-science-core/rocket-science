@@ -1,19 +1,7 @@
-import React from 'react';
-import { useQuery, gql } from '@apollo/client';
-
-import { FilmCard } from '../FilmCard';
-
-const AllFilmsQuery = gql`
-  query AllFilmsQuery {
-    allFilms {
-      films {
-        title
-        episode_id: episodeID
-        opening_crawl: openingCrawl
-      }
-    }
-  }
-`;
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { FilmCard } from "../FilmCard";
+import { AllFilmsQuery } from "../../../../routes/MSWTemplates/apiAlternatives/apollo";
 
 function useFetchFilms() {
   const { loading, error, data } = useQuery(AllFilmsQuery);

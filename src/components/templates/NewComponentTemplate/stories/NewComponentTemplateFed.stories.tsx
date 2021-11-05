@@ -4,7 +4,7 @@ import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContaine
 const Readme = require("../README.md").default;
 
 export default {
-  title: "Templates & Guides/NewComponentTemplate/Federated",
+  title: "Newly Generated/NewComponentTemplate/Federated",
   component: DynamicRemoteContainer,
 } as ComponentMeta<typeof DynamicRemoteContainer>;
 

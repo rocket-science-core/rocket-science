@@ -1,11 +1,11 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 const Readme = require("../README.md").default;
-
+import storybookNamespaceConfig from "../../../../stories";
 import NewComponentTemplate from "../NewComponentTemplate";
 
 export default {
-  title: "Templates & Guides/NewComponentTemplate/Default",
+  title: `${storybookNamespaceConfig.newComponents}/NewComponentTemplate/Default`,
   component: NewComponentTemplate,
   argTypes: {
     text: { control: "text" },

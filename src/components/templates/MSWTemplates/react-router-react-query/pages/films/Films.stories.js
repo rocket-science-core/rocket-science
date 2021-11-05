@@ -1,19 +1,20 @@
-import React from 'react';
-import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { rest } from 'msw';
-import Films from './Films';
+import React from "react";
+import { MemoryRouter as Router, Route } from "react-router-dom";
+import { QueryClientProvider } from "react-query";
+import { restHandlers, reactQueryMSW } from "../../../../../../routes";
+import storybookNamespaceConfig from "../../../../../../stories";
+import Films from "./Films";
+
+const { defaultQueryClient, mockedQueryClient } = reactQueryMSW;
 
 export default {
-  title: 'Templates & Guides/Application Examples/React Router + RQ/Page Stories/Films',
+  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ/Page Stories/Films`,
   component: Films,
 };
 
-const defaultQueryClient = new QueryClient();
-
 export const DefaultBehavior = () => (
   <QueryClientProvider client={defaultQueryClient}>
-    <Router initialEntries={['/films']}>
+    <Router initialEntries={["/films"]}>
       <Route exact path="/films">
         <Films />
       </Route>
@@ -21,17 +22,9 @@ export const DefaultBehavior = () => (
   </QueryClientProvider>
 );
 
-const mockedQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
 const MockTemplate = () => (
   <QueryClientProvider client={mockedQueryClient}>
-    <Router initialEntries={['/films']}>
+    <Router initialEntries={["/films"]}>
       <Route exact path="/films">
         <Films />
       </Route>
@@ -40,39 +33,9 @@ const MockTemplate = () => (
 );
 
 export const MockedSuccess = MockTemplate.bind({});
-MockedSuccess.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          results: [
-            {
-              title: '(Mocked) A New Hope',
-              episode_id: 4,
-              release_date: '1977-05-25',
-              url: 'http://swapi.dev/api/films/1/',
-            },
-            {
-              title: '(Mocked) Empire Strikes Back',
-              episode_id: 5,
-              release_date: '1980-05-17',
-              url: 'http://swapi.dev/api/films/2/',
-            },
-          ],
-        }),
-      );
-    }),
-  ],
-};
+const MockedSuccessRoutes = Object.values(restHandlers.MockedSuccess);
+MockedSuccess.parameters = { msw: MockedSuccessRoutes };
 
 export const MockedError = MockTemplate.bind({});
-MockedError.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/films/', (req, res, ctx) => {
-      return res(
-        ctx.delay(800),
-        ctx.status(403),
-      );
-    }),
-  ],
-};
+const MockedErrorRoutes = Object.values(restHandlers.MockedError);
+MockedError.parameters = { msw: MockedErrorRoutes };

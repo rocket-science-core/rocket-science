@@ -1,0 +1,57 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import LinkTo from '@storybook/addon-links/react'
+
+<Meta title="Templates & Guides/Tooling Guides/Rocket Science/Getting Started" />
+
+<header className="introduction-header">
+  <img src="https://i.imgur.com/0BSLz9v.png" width="500" />
+  <h1>Getting Started</h1>
+</header>
+
+<br/>
+
+## 1. Create a new Rocket Science application
+
+`$ npx create-rs-app`
+
+This will clone and customize the Rocket Science repository based on the choices made during the CLI prompts after the command is run. 
+
+<br/>
+
+## 2. Provide the CLI the name of your project
+
+`$ NewRocketScienceApplication`
+
+This will determine the name of not only the parent directory of the application, but also the name provided to the `ModuleFederationPlugin` in the `./webpack.config.js`
+
+<br/>
+
+## 3. Change directories into your newly generated project
+
+`$ cd NewRocketScienceApplication`
+
+<br/>
+
+## 4. Run the setup script
+
+`$ yarn setup`
+
+1. installs dependencies
+2. runs unit tests to create .jest-test-results.json for tests storybook addon
+
+<br/>
+
+## 5. Start the newly generated Rocket Science Application
+
+`$ yarn launch`
+
+1. deletes ./dist folder holding previous builds
+2. runs webpack build in watch mode
+    1. leaves the node process running to listen for changes
+    2. generates new build on saved changes
+3. starts storybook
+4. starts federated module CDN server on port 3001
+
+<br/>
+
+## 6. Check out the newly opened tab on [localhost:6006](http://localhost:6006)

@@ -1,19 +1,7 @@
-import React from 'react';
-import { useQuery } from 'urql';
-
-import { FilmCard } from '../FilmCard';
-
-const AllFilmsQuery = `
-  query AllFilmsQuery {
-    allFilms {
-      films {
-        title
-        episode_id: episodeID
-        opening_crawl: openingCrawl
-      }
-    }
-  }
-`;
+import React from "react";
+import { useQuery } from "urql";
+import { FilmCard } from "../FilmCard";
+import { AllFilmsQuery } from "../../../../routes/MSWTemplates/apiAlternatives/apollo";
 
 function useFetchFilms() {
   const [{ fetching, error, data }] = useQuery({

@@ -1,19 +1,24 @@
-import React from 'react';
-import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { rest } from 'msw';
-import Characters from './Characters';
+import React from "react";
+import { MemoryRouter as Router, Route } from "react-router-dom";
+import { QueryClientProvider } from "react-query";
+import { restHandlers, reactQueryMSW } from "../../../../../../routes";
+import storybookNamespaceConfig from "../../../../../../stories";
+import Characters from "./Characters";
+
+const {
+  defaultQueryClient,
+  mockedQueryClient,
+} = reactQueryMSW;
 
 export default {
-  title: 'Templates & Guides/Application Examples/React Router + RQ/Page Stories/Characters',
+  title:
+  `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ/Page Stories/Characters`,
   component: Characters,
 };
 
-const defaultQueryClient = new QueryClient();
-
 export const DefaultBehavior = () => (
   <QueryClientProvider client={defaultQueryClient}>
-    <Router initialEntries={['/characters']}>
+    <Router initialEntries={["/characters"]}>
       <Route exact path="/characters">
         <Characters />
       </Route>
@@ -21,17 +26,9 @@ export const DefaultBehavior = () => (
   </QueryClientProvider>
 );
 
-const mockedQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
 const MockTemplate = () => (
   <QueryClientProvider client={mockedQueryClient}>
-    <Router initialEntries={['/characters']}>
+    <Router initialEntries={["/characters"]}>
       <Route exact path="/characters">
         <Characters />
       </Route>
@@ -40,35 +37,9 @@ const MockTemplate = () => (
 );
 
 export const MockedSuccess = MockTemplate.bind({});
-MockedSuccess.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/people/', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          results: [
-            {
-              name: '(Mocked) Luke Skywalker',
-              url: 'http://swapi.dev/api/people/1/',
-            },
-            {
-              name: '(Mocked) C-3PO',
-              url: 'http://swapi.dev/api/people/2/',
-            },
-          ],
-        }),
-      );
-    }),
-  ],
-};
+const MockedSuccessRoutes = Object.values(restHandlers.MockedSuccess);
+MockedSuccess.parameters = { msw: MockedSuccessRoutes };
 
 export const MockedError = MockTemplate.bind({});
-MockedError.parameters = {
-  msw: [
-    rest.get('https://swapi.dev/api/people/', (req, res, ctx) => {
-      return res(
-        ctx.delay(800),
-        ctx.status(403),
-      );
-    }),
-  ],
-};
+const MockedErrorRoutes = Object.values(restHandlers.MockedError);
+MockedError.parameters = { msw: MockedErrorRoutes };
