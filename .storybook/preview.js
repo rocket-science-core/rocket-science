@@ -5,7 +5,6 @@ import { withPerformance } from 'storybook-addon-performance';
 import { initializeWorker, mswDecorator } from 'msw-storybook-addon';
 import { themes } from '@storybook/theming';
 
-
 try {
   if (require.resolve('../.jest-test-results.json')) {
     const results = require('../.jest-test-results.json');
@@ -35,5 +34,5 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
-  },
+  }
 };
