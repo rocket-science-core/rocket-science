@@ -7,7 +7,7 @@ import storybookNamespaceConfig from "../../../../stories";
 const { defaultQueryClient, mockedQueryClient } = reactQueryMSW;
 
 export default {
-  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Query`,
+  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/REST/React Query`,
   component: App,
 };
 

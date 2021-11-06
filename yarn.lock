@@ -3165,6 +3165,13 @@
     "@graphql-typed-document-node/core" "^3.1.0"
     wonka "^4.0.14"
 
+"@washingtonpost/storybook-addon-web-vitals@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@washingtonpost/storybook-addon-web-vitals/-/storybook-addon-web-vitals-0.1.1.tgz#4e848510cd9495034d5b9334280ad51bf4e0049b"
+  integrity sha512-+yIJm+5YF3DVp/ueoZR8Zn3FGSXKaeWJ5TqgVwJb5EWyPNzyVgtlR2tGM7Gg6+WXS0eGOT97nRKIEjkCzs7oeA==
+  dependencies:
+    "@storybook/addons" "^6.0.0"
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"

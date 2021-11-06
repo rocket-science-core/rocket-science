@@ -10,6 +10,7 @@ module.exports = {
     '@storybook/addon-a11y',
     'storybook-addon-performance/register',
     '@storybook/addon-storysource',
+    "@washingtonpost/storybook-addon-web-vitals",
     {name: "@storybook/addon-essentials", options: {actions: false}}
   ]
 }

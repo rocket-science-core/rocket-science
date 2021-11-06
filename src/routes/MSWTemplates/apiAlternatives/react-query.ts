@@ -1,6 +1,4 @@
 import { QueryClient } from "react-query";
-import { rest } from "msw";
-import { films } from "../data";
 
 /**
  * Instantiated default and mocked clients

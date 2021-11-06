@@ -14,7 +14,7 @@ const {
 
 export default {
   title:
-  `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ/Page Stories/Character`,
+  `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/REST/React Router + RQ/Page Stories/Character`,
   component: Character,
 };
 

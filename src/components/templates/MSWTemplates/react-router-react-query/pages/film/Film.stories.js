@@ -8,7 +8,7 @@ import Film from "./Film";
 const { defaultQueryClient, mockedQueryClient } = reactQueryMSW;
 
 export default {
-  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ/Page Stories/Film`,
+  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/REST/React Router + RQ/Page Stories/Film`,
   component: Film,
 };
 

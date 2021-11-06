@@ -12,7 +12,7 @@ const {
 } = reactQueryMSW;
 
 export default {
-  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/React Query/React Router + RQ`,
+  title: `${storybookNamespaceConfig.templatesAndGuides}/Application Examples/REST/React Router + RQ`,
   component: App,
 };
 
