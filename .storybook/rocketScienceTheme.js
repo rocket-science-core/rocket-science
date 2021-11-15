@@ -33,7 +33,7 @@ const RocketScienceTheme = create({
 
   brandTitle: 'Rocket Science',
   brandUrl: 'https://github.com/rocket-science-core/rocket-science',
-  brandImage: 'https://i.imgur.com/K2jrKka.png',
+  brandImage: 'https://i.imgur.com/kmiqm2X.png',
 });
 
 export default RocketScienceTheme;
