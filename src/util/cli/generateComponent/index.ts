@@ -1,3 +1,5 @@
+const {htmlTags} = require("./htmlTags.ts");
+
 var inquirer = require('inquirer')
 const fs = require('fs')
 // const path = require('path')
@@ -292,9 +294,16 @@ inquirer
     },
   ])
   .then(answers => {
-    const {name, componentType} = answers
+    const {componentType} = answers;
+    let { name } = answers;
     // Use user feedback for... whatever!!
     // console.log(answers);
+
+    // Check if component name is an existing native HTML taggit 
+    if (htmlTags.includes(name.toLowerCase()))  throw new Error("This component name is a native HTML tag, please choose a different name");
+
+    // Capitalize first letter of component name
+    name = name[0].toUpperCase() + name.slice(1);
 
     const dir = `./src/components/${name}`
     const storiesDir = dir + `/stories`
@@ -321,7 +330,6 @@ inquirer
 
       console.log('nice try')
     } else {
-      // Something else went wrong
-      console.log('nice try')
+     throw new Error(error);
     }
   })
