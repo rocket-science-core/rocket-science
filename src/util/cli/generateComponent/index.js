@@ -1,3 +1,5 @@
+const { htmlTags } = require("./htmlTags.ts");
+
 var inquirer = require("inquirer");
 const fs = require("fs");
 // const path = require('path')
@@ -79,7 +81,7 @@ const makeDefaultStoryFile = (name) => {
   import ${name} from "../${name}";
   
   export default {
-    title: "Examples/${name}/Default",
+    title: "Newly Generated/${name}/Default",
     component: ${name},
     argTypes: {
       text: { control: "text" },
@@ -130,7 +132,7 @@ const makeFederatedStoryFile = (name) => {
   const Readme = require("../README.md").default;
   
   export default {
-    title: "Examples/${name}/Federated",
+    title: "Newly Generated/${name}/Federated",
     component: DynamicRemoteContainer,
   };
   
@@ -278,14 +280,24 @@ inquirer
     {
       type: "list",
       name: "componentType",
-      choices: ["Federated Organism", "Feature Level Component"],
-      message: "Is this a federated organism or a feature level component?",
+      choices: ["Federated Feature", "Atomic Level Component"],
+      message: "Is this a Federated Feature or a Atomic Level Component?",
     },
   ])
   .then((answers) => {
-    const { name, componentType } = answers;
+    const { componentType } = answers;
+    let { name } = answers;
     // Use user feedback for... whatever!!
     // console.log(answers);
+
+    // Check if component name is an existing native HTML taggit
+    if (htmlTags.includes(name.toLowerCase()))
+      throw new Error(
+        "This component name is a native HTML tag, please choose a different name"
+      );
+
+    // Capitalize first letter of component name
+    name = name[0].toUpperCase() + name.slice(1);
 
     const dir = `./src/components/${name}`;
     const storiesDir = dir + `/stories`;
@@ -301,7 +313,7 @@ inquirer
     if (!fs.existsSync(storiesDir)) {
       fs.mkdirSync(storiesDir, { recursive: false });
       makeDefaultStoryFile(name);
-      if (componentType === "Federated Organism") {
+      if (componentType === "Federated Feature") {
         makeFederatedStoryFile(name);
       }
     }
@@ -312,7 +324,6 @@ inquirer
 
       console.log("nice try");
     } else {
-      // Something else went wrong
-      console.log("nice try");
+      throw new Error(error);
     }
   });
