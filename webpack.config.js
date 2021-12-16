@@ -1,14 +1,14 @@
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
-
-const deps = require('./package.json').dependencies
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { federatedServerPort } = require("./rs.config");
+const deps = require("./package.json").dependencies;
 
 module.exports = {
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.md'],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".md"],
   },
 
   output: {
-    publicPath: 'http://localhost:3001/',
+    publicPath: `http://localhost:${federatedServerPort}/`,
   },
 
   devServer: {
@@ -19,20 +19,20 @@ module.exports = {
     rules: [
       {
         test: /\.m?js/,
-        type: 'javascript/auto',
+        type: "javascript/auto",
         resolve: {
           fullySpecified: false,
         },
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
       },
     ],
@@ -40,11 +40,12 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: 'RocketScience',
-      filename: 'remoteEntry.js',
+      name: "RocketScience",
+      filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        './NewComponentTemplate': './src/components/templates/NewComponentTemplate',
+        "./NewComponentTemplate":
+          "./src/components/templates/NewComponentTemplate",
       },
       shared: {
         ...deps,
@@ -52,11 +53,11 @@ module.exports = {
           singleton: true,
           requiredVersion: deps.react,
         },
-        'react-dom': {
+        "react-dom": {
           singleton: true,
-          requiredVersion: deps['react-dom'],
+          requiredVersion: deps["react-dom"],
         },
       },
     }),
   ],
-}
+};
