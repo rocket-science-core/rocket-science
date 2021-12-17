@@ -135,10 +135,12 @@ const makeDefaultStoryFile = name => {
 }
 
 const makeFederatedStoryFile = name => {
+  const federatedServerPortString = "${federatedServerPort}";
   const storyFile = `import React from "react";
   import { ComponentStory, ComponentMeta } from "@storybook/react";
   import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
   const Readme = require("../README.md").default;
+  // import { federatedServerPort } from "../../../../rs.config";
   
   export default {
     title: "Newly Generated/${name}/Federated",
@@ -183,7 +185,7 @@ const makeFederatedStoryFile = name => {
   //   componentProps: {
   //     text: "Hello World",
   //   },
-  //   url: "http://localhost:3001/remoteEntry.js",
+  //   url: \`http://localhost:${federatedServerPortString}/remoteEntry.js\`,
   //   scope: "RocketScience",
   //   module: "./${name}",
   // };
@@ -198,7 +200,7 @@ const makeFederatedStoryFile = name => {
   //   componentProps: {
   //     text: "",
   //   },
-  //   url: "http://localhost:3001/remoteEntry.js",
+  //   url: \`http://localhost:${federatedServerPortString}/remoteEntry.js\`,
   //   scope: "RocketScience",
   //   module: "./${name}",
   // };
