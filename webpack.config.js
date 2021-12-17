@@ -29,7 +29,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -46,6 +46,7 @@ module.exports = {
       exposes: {
         "./NewComponentTemplate":
           "./src/components/templates/NewComponentTemplate",
+        "./MyComponent": "./src/components/MyComponent",
       },
       shared: {
         ...deps,

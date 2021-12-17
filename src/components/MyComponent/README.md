@@ -5,11 +5,11 @@ This is an example component intended to outline the expected code quality for a
 # 💻 Usage
 
 ```jsx
-// Replace the file path with the correct filepath to NewComponentTemplate
-import NewComponentTemplate from "./filePathTo/NewComponentTemplate";
+// Replace the file path with the correct filepath to MyComponent
+import MyComponent from './filePathTo/MyComponent';
 
 // Replace the string provided to text with your own
-<NewComponentTemplate text="text content here" />;
+<MyComponent text='text content here' />
 ```
 
 # 📩 Button Props
@@ -17,3 +17,4 @@ import NewComponentTemplate from "./filePathTo/NewComponentTemplate";
 | Name | Required | Type   | DefaultValue | Description  |
 | ---- | -------- | ------ | ------------ | ------------ |
 | text | ❌       | string | -            | button label |
+    
