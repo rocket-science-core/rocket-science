@@ -2,7 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContainer";
 const Readme = require("../README.md").default;
-const { federatedServerPort } = require("../../../../../rs.config");
+import { federatedServerPort } from "../../../../../rs.config";
 
 export default {
   title: "Templates & Guides/NewComponentTemplate/Federated",
