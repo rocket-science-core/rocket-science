@@ -6,10 +6,10 @@ This is an example component intended to outline the expected code quality for a
 
 ```jsx
 // Replace the file path with the correct filepath to NewComponentTemplate
-import NewComponentTemplate from './filePathTo/NewComponentTemplate';
+import NewComponentTemplate from "./filePathTo/NewComponentTemplate";
 
 // Replace the string provided to text with your own
-<NewComponentTemplate text='text content here' />
+<NewComponentTemplate text="text content here" />;
 ```
 
 # 📩 Button Props

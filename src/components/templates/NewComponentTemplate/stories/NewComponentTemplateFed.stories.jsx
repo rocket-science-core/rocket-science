@@ -1,9 +1,10 @@
 import React from "react";
-import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
+import DynamicRemoteContainer from "../../../../util/hooks/DynamicRemoteContainer";
 const Readme = require("../README.md").default;
+const { federatedServerPort } = require("../../../../../rs.config");
 
 export default {
-  title: "Examples/NewComponentTemplate/Federated",
+  title: "Templates & Guides/NewComponentTemplate/Federated",
   component: DynamicRemoteContainer,
 };
 
@@ -22,7 +23,7 @@ export default {
 //
 // 2. Uncomment the code below
 //
-// 3. Run $ yarn story
+// 3. Run $ yarn launch
 //
 // ==============================
 
@@ -45,7 +46,7 @@ ModFedPrimary.args = {
   componentProps: {
     text: "Hello World",
   },
-  url: "http://localhost:3001/remoteEntry.js",
+  url: `http://localhost:${federatedServerPort}/remoteEntry.js`,
   scope: "RocketScience",
   module: "./NewComponentTemplate",
 };
@@ -60,7 +61,7 @@ ModFedSecondary.args = {
   componentProps: {
     text: "",
   },
-  url: "http://localhost:3001/remoteEntry.js",
+  url: `http://localhost:${federatedServerPort}/remoteEntry.js`,
   scope: "RocketScience",
   module: "./NewComponentTemplate",
 };

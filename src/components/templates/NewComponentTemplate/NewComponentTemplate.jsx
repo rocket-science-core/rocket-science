@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import NewComponentTemplateWrapper from "./NewComponentTemplate.styles";
 
 const NewComponentTemplate = ({ text }) => {

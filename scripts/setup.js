@@ -93,6 +93,13 @@ function main() {
   if (result === FAILURE) return
 
   result = run(
+    'Git hooks installation',
+    'Installing git hooks for husky',
+    'yarn prepare',
+  )
+  if (result === FAILURE) return
+
+  result = run(
     'Project Validation',
     'Running validation checks to ensure dependencies were installed properly',
     'yarn validate -s',

@@ -4,7 +4,7 @@ const Readme = require("../README.md").default;
 import NewComponentTemplate from "../NewComponentTemplate";
 
 export default {
-  title: "Examples/NewComponentTemplate/Default",
+  title: "Templates & Guides/NewComponentTemplate/Default",
   component: NewComponentTemplate,
   argTypes: {
     text: { control: "text" },

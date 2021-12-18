@@ -1,5 +1,5 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-
+const { federatedServerPort } = require("./rs.config");
 const deps = require("./package.json").dependencies;
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
   },
 
   output: {
-    publicPath: "http://localhost:3001/",
+    publicPath: `http://localhost:${federatedServerPort}/`,
   },
 
   devServer: {
@@ -29,7 +29,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -44,7 +44,9 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./NewComponentTemplate": "./src/components/NewComponentTemplate",
+        "./NewComponentTemplate":
+          "./src/components/templates/NewComponentTemplate",
+        "./MyComponent": "./src/components/MyComponent",
       },
       shared: {
         ...deps,

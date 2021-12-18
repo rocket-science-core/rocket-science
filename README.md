@@ -1,3 +1,5 @@
+![rocket science header image](https://i.imgur.com/f743o61.png)
+
 # 📝 Summary
 
 An opinionated UI Workbench featuring tools like react, styled components, typescript, webpack, jest and storybook all bundled into an easy to use interface
@@ -57,9 +59,8 @@ An opinionated UI Workbench featuring tools like react, styled components, types
 
 1. Run $ git clone [https://github.com/SketchLagoon/rocket-science.git](https://github.com/SketchLagoon/rocket-science.git)
 2. Run $ cd rocket-science
-3. Run $ yarn
-4. Run $ yarn test
-5. Run $ yarn story
+3. Run $ yarn setup
+4. Run $ yarn launch
    1. deletes ./dist folder holding previous builds
    2. runs webpack build in watch mode
       1. leaves the node process running to listen for changes

@@ -1,9 +1,7 @@
+const { htmlTags } = require("./htmlTags.js");
+
 var inquirer = require("inquirer");
 const fs = require("fs");
-// const path = require('path')
-// const dirPath = path.join(__dirname, '/src/')
-
-const webpackConfig = require("../../../../webpack.config.js");
 
 const makeIndexFile = (name) => {
   const indexFile = `export { default } from './${name}';\nexport * from './${name}';`;
@@ -79,7 +77,7 @@ const makeDefaultStoryFile = (name) => {
   import ${name} from "../${name}";
   
   export default {
-    title: "Examples/${name}/Default",
+    title: "Newly Generated/${name}/Default",
     component: ${name},
     argTypes: {
       text: { control: "text" },
@@ -125,12 +123,14 @@ const makeDefaultStoryFile = (name) => {
 };
 
 const makeFederatedStoryFile = (name) => {
+  const federatedServerPortString = "${federatedServerPort}";
   const storyFile = `import React from "react";
   import DynamicRemoteContainer from "../../../util/hooks/DynamicRemoteContainer";
   const Readme = require("../README.md").default;
+  // import { federatedServerPort } from "../../../../rs.config";
   
   export default {
-    title: "Examples/${name}/Federated",
+    title: "Newly Generated/${name}/Federated",
     component: DynamicRemoteContainer,
   };
   
@@ -172,7 +172,7 @@ const makeFederatedStoryFile = (name) => {
   //   componentProps: {
   //     text: "Hello World",
   //   },
-  //   url: "http://localhost:3001/remoteEntry.js",
+  //   url: \`http://localhost:${federatedServerPortString}/remoteEntry.js\`,
   //   scope: "RocketScience",
   //   module: "./${name}",
   // };
@@ -187,7 +187,7 @@ const makeFederatedStoryFile = (name) => {
   //   componentProps: {
   //     text: "",
   //   },
-  //   url: "http://localhost:3001/remoteEntry.js",
+  //   url: \`http://localhost:${federatedServerPortString}/remoteEntry.js\`,
   //   scope: "RocketScience",
   //   module: "./${name}",
   // };
@@ -278,14 +278,24 @@ inquirer
     {
       type: "list",
       name: "componentType",
-      choices: ["Federated Organism", "Feature Level Component"],
-      message: "Is this a federated organism or a feature level component?",
+      choices: ["Federated Feature", "Atomic Level Component"],
+      message: "Is this a Federated Feature or a Atomic Level Component?",
     },
   ])
   .then((answers) => {
-    const { name, componentType } = answers;
+    const { componentType } = answers;
+    let { name } = answers;
     // Use user feedback for... whatever!!
     // console.log(answers);
+
+    // Check if component name is an existing native HTML taggit
+    if (htmlTags.includes(name.toLowerCase()))
+      throw new Error(
+        "This component name is a native HTML tag, please choose a different name"
+      );
+
+    // Capitalize first letter of component name
+    name = name[0].toUpperCase() + name.slice(1);
 
     const dir = `./src/components/${name}`;
     const storiesDir = dir + `/stories`;
@@ -301,7 +311,7 @@ inquirer
     if (!fs.existsSync(storiesDir)) {
       fs.mkdirSync(storiesDir, { recursive: false });
       makeDefaultStoryFile(name);
-      if (componentType === "Federated Organism") {
+      if (componentType === "Federated Feature") {
         makeFederatedStoryFile(name);
       }
     }
@@ -312,7 +322,6 @@ inquirer
 
       console.log("nice try");
     } else {
-      // Something else went wrong
-      console.log("nice try");
+      throw new Error(error);
     }
   });
