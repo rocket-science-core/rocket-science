@@ -46,6 +46,7 @@ module.exports = {
       exposes: {
         "./NewComponentTemplate":
           "./src/components/templates/NewComponentTemplate",
+        "./SomeExample": "./src/components/SomeExample",
       },
       shared: {
         ...deps,
